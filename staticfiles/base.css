@@ -1,0 +1,393 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --var-bg: #2b3a6a;
+  --screen: calc(var(--vh, 1vh) * 100 - (env(safe-area-inset-top) + env(safe-area-inset-bottom)));
+}
+
+div::-webkit-scrollbar,
+section::-webkit-scrollbar {
+  background: transparent;
+  width: 0;
+}
+section::-webkit-scrollbar-thumb {
+  background: transparent;
+  width: 0;
+}
+.page {
+  display: flex;
+  width: 70%;
+  padding: 2vh 0;
+  margin: auto;
+  gap: 0 1%;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.top_nav {
+  width: 66%;
+  padding: 0.4rem 2%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 0 10px 10px;
+  color: white;
+  background: var(--var-bg);
+}
+
+.top_nav button:nth-child(1) {
+  display: none;
+  background: transparent;
+  color: white;
+}
+
+.top_nav .left {
+  display: flex;
+  gap: 0.2rem 0;
+  flex-direction: column;
+}
+
+.top_nav .left div {
+  display: flex;
+  align-items: center;
+  gap: 0 0.5rem;
+}
+
+.top_nav .left a {
+  font-size: 1.6rem;
+  color: white;
+}
+
+.top_nav .player {
+  display: flex;
+  gap: 0 0.8rem;
+  border: 1px solid white;
+  background: white;
+  padding: 0 15px;
+  border-radius: 10px;
+  align-items: center;
+  color: var(--var-bg);
+}
+
+.top_nav .player p {
+  display: flex;
+  flex-direction: column;
+}
+
+.top_nav .player button {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.top_nav .right {
+  display: flex;
+  align-items: center;
+  gap: 0 1rem;
+}
+
+.top_nav .right input {
+  width: 170px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.main {
+  width: 43%;
+  padding: 3vh 3%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem 0;
+  border: 1px solid lightgray;
+  border-radius: 20px;
+}
+
+.news {
+  display: flex;
+  width: 95%;
+  flex-direction: column;
+  gap: 0.5rem 0;
+  color: black;
+  border: 1px solid darkgray;
+  padding: 1rem 2.5%;
+  cursor: pointer;
+  border-radius: 0 0 20px 20px;
+  border-radius: 20px;
+  transition: 0.4s ease;
+}
+
+.news p {
+  width: 100%;
+  color: rgb(88, 88, 88);
+  display: flex;
+}
+.news p:nth-child(1){
+  align-items: center;
+  justify-content: space-between;
+}
+
+.news p span {
+  display: flex;
+  align-items: center;
+  gap: 0 0.5rem;
+}
+
+.news h3 {
+  overflow: hidden;
+  display: -webkit-box;
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+.news .tag_box {
+  color: rgb(107, 107, 107);
+  display: flex;
+  gap: 0 10px;
+}
+
+.news .img_box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem 0;
+  border-radius: 20px;
+  width: 100%;
+}
+
+.news .img_box img,
+.news .img_box video {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.news .img_box small,
+.news .img_box p {
+  width: 95%;
+  padding: 0 2.5%;
+}
+
+.news nav {
+  display: flex;
+  margin: 0.5rem 0;
+  justify-content: space-around;
+}
+
+.news nav a {
+  font-size: 1.3rem;
+  color: rgb(123, 123, 123);
+}
+.news nav a:hover{
+  color: salmon;
+}
+
+.ad {
+  width: 400px;
+  height: 250px;
+  background-position: center;
+  background-size: cover;
+  background-image: url('https://res.cloudinary.com/dvnemzw0z/image/upload/v1691270356/RadioProject/jviteiljlwsborscg2uv.jpg');
+}
+
+.mobile_nav {
+  width: 90%;
+  padding: 5px 5%;
+  height: 40px;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  gap: 0 1rem;
+  justify-content: center;
+  background: var(--var-bg);
+}
+
+.mobile_nav img {
+  height: 40px;
+  background: white;
+  border-radius: 5px;
+}
+
+.mobile_nav span {
+  font-size: 1.5rem;
+  color: white;
+  letter-spacing: 1px;
+}
+
+#playlist {
+  position: fixed;
+  bottom: 85px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: white;
+  border-radius: 50%;
+  background: salmon;
+  z-index: 2000;
+  color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: none;
+}
+
+.loader {
+  width: 100%;
+  padding: 1rem 0;
+  background: whitesmoke;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 5px;
+  display: none;
+  gap: 0 1rem;
+}
+
+.loader div {
+  width: 15px;
+  height: 15px;
+  border-radius: 10px;
+  border-radius: 43% 55% 52% 50% / 55% 50% 49% 47%;
+  background: rgb(58, 58, 58);
+}
+
+@media all and (max-width:1700px) {
+  .page {
+    width: 80%;
+  }
+  .top_nav {
+    width: 76%;
+  }
+}
+
+@media all and (max-width:1400px) {
+  .page {
+    width: 90%;
+  }
+
+  .top_nav {
+    width: 86%;
+  }
+}
+
+@media all and (max-width:1200px) {
+  .page {
+    width: 95%;
+    padding: 7vh 0;
+  }
+
+  .top_nav {
+    width: 96%;
+    border-radius: 0;
+    height: 50px;
+    padding: 10px 2%;
+    position: fixed;
+    z-index: 1000;
+  }
+
+  .top_nav button:nth-child(1) {
+    display: flex;
+  }
+  .main {
+    width: 68%;
+  }
+}
+
+@media all and (max-width:1000px) {
+  .page {
+    justify-content: center;
+  }
+
+  .main {
+    width: 90%;
+    border: 1px solid black;
+  }
+}
+
+@media all and (max-width:650px) {
+  .top_nav {
+    bottom: 5px;
+    width: 90%;
+    padding: 5px 3% 5px 3%;
+    margin: 0 2%;
+    z-index: 2000;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+  .top_nav .left,
+  .top_nav .right input {
+    display: none;
+  }
+
+  .top_nav .player {
+    background: transparent;
+    color: white;
+    border: none;
+    border-radius: 0;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+  }
+
+  .page {
+    margin: 0;
+    padding: 0;
+    height: calc(var(--screen) - 115px);
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  .main {
+    border: none;
+    width: 90%;
+  }
+
+  .top_swiper .swiper-slide a p {
+    font-size: 0.75rem;
+  }
+
+  .news P {
+    font-size: 0.8rem;
+  }
+
+  .mobile_nav {
+    display: flex;
+  }
+
+  @media all and (max-width:550px) {
+    .news h3 {
+      font-size: 1.1rem;
+    }
+
+    .ad {
+      width: 80%;
+      object-fit: cover;
+      aspect-ratio: 4/3;
+      height: auto;
+    }
+  }
+
+  @media all and (max-width:450px) {
+    .news {
+      width: 95%;
+      padding: 0.5rem 2.5%;
+    }
+
+    .news h3 {
+      font-size: 0.85rem;
+    }
+
+    .news nav a {
+      font-size: 1.2rem;
+    }
+  }
+}

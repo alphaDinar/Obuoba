@@ -1,0 +1,106 @@
+.main header {
+  display: flex;
+  padding: 10px 0;
+  align-items: center;
+  border-bottom: 2px solid darkgray;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.main header strong {
+  font-size: 2rem;
+}
+
+.main header input {
+  width: 200px;
+  padding: 5px 15px;
+  height: 30px;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+}
+
+.day_box_holder {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem 0;
+}
+
+.day_box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem 0;
+}
+
+.day_box h3 {
+  border-bottom: 1px solid rgb(255, 193, 193);
+}
+
+.program {
+  position: relative;
+}
+
+.program nav {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  gap: 0.6rem 0;
+}
+
+.program nav i,
+.post nav i {
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.program nav i:nth-child(1),
+.post nav i:nth-child(1) {
+  background: skyblue;
+}
+
+.program nav i:nth-child(2),
+.post nav i:nth-child(2) {
+  background: tomato;
+}
+
+.list_box {
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+
+
+@media all and (max-width:1200px) {
+  .day_box {
+    align-items: center;
+  }
+
+  .list_box {
+    justify-content: space-around;
+  }
+}
+
+@media all and (max-width:600px) {
+  .main header {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem 0;
+  }
+
+  div::-webkit-scrollbar,
+  section::-webkit-scrollbar {
+    background: transparent;
+    width: 0;
+  }
+
+  section::-webkit-scrollbar-thumb {
+    background: transparent;
+    width: 0;
+  }
+}

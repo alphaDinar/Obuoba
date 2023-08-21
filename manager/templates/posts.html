@@ -1,0 +1,254 @@
+{% extends "manager_base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'manager/dash.css' %}">
+<link rel="stylesheet" href="{% static 'manager/manager_forms.css' %}">
+<style>
+  .form_cover form .img_box {
+    width: 100%;
+    padding: 0;
+    height: 250px;
+  }
+
+  .form_cover form div .file_nav {
+    display: flex;
+    gap: 0 1rem;
+  }
+
+  .form_cover form div .file_nav span {
+    background: transparent;
+    padding: 5px;
+    cursor: pointer;
+    border: 1px solid darkgray;
+    border-radius: 5px;
+  }
+
+  .form_cover form div .file_nav span.change {
+    background: salmon;
+    color: white;
+  }
+
+  .dis_image {
+    background-position: center;
+    background-size: cover;
+  }
+
+  .form_cover .swiper-slide video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    aspect-ratio: 4/3;
+  }
+
+  @media all and (max-width:800px) {
+    .form_cover form .img_box {
+      height: 200px;
+    }
+  }
+</style>
+{% endblock css %}
+
+
+{% block main %}
+<header>
+  <select>
+    <option value="">All</option>
+  </select>
+  <strong>Posts</strong>
+  <input type="text" placeholder="Search Post">
+</header>
+
+<section class="list_box">
+  <div class="add_post material-symbols-outlined" onclick="openForm()">
+    add
+  </div>
+
+
+  {% for post in posts %}
+  <div class="post">
+    <small>{{post.category}}</small>
+    {% if post.type == 'image' %}
+    <img src="{{post.image.url}}" alt="">
+    {% else %}
+    <video src="{{post.video.url}}" controls></video>
+    {% endif %}
+    <small>{{post.date_added|date:'jS F, Y'}} | {{post.date_added|timesince}}</small>
+    <p>{{post.title}}</p>
+    <nav>
+      <i class="material-symbols-outlined" data-id="{{post.id}}" data-title="{{post.title}}"
+        data-category="{{post.category}}" data-content="{{post.content}}" data-type="{{post.type}}" 
+        {% if post.type == 'image' %} 
+        data-image="{{post.image.url}}" 
+        {% else %} 
+        data-video="{{post.video.url}}" 
+        {% endif %}
+        data-source="{{post.source}}" data-tags="{{post.tags}}" onclick="editPost(event.target)">edit</i>
+      <i class="material-symbols-outlined"
+        onclick="delItem(event.target, '{{post.id}}' , '{{post.title}}', 'del_post')">delete</i>
+    </nav>
+  </div>
+  {% endfor %}
+</section>
+
+<section class="form_cover">
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <button type="button" class="material-symbols-outlined" onclick="closeForm()">close</button>
+    <div>
+      <span>Title *</span>
+      <input type="text" name="title" required>
+    </div>
+    <div>
+      <span>Category</span>
+      <select name="category" style="color: rgb(104, 104, 104);">
+      </select>
+    </div>
+    <div>
+      <span>Content *</span>
+      <textarea name="content" required></textarea>
+    </div>
+    <div>
+      <p class="file_nav">
+        <span>Image</span>
+        <span>Video</span>
+      </p>
+      <section class="img_box swiper">
+        <section class="swiper-wrapper">
+          <section class="swiper-slide dis_image">
+            <label for="add_image">
+              <i class="material-symbols-outlined">add_a_photo</i>
+              <input id="add_image" onchange="addImage(event.target, event.target.parentElement.parentElement)"
+                name="image" type="file" accept="image/*" style="height: 1px; width: 1px;" required>
+            </label>
+          </section>
+          <section class="swiper-slide">
+            <video autoplay muted controls></video>
+            <label for="add_video" style="z-index: 1000;">
+              <i class="material-symbols-outlined">videocam</i>
+              <input id="add_video" onchange="addVideo(event.target)" name="video" type="file" accept="video/*"
+                style="height: 1px; width: 1px;" required>
+            </label>
+          </section>
+        </section>
+      </section>
+    </div>
+    <div>
+      <span>Source</span>
+      <input type="text" name="source">
+    </div>
+    <div>
+      <span>Tags</span>
+      <input type="text" placeholder="seperate with commas max(3 tags)" name="tags">
+    </div>
+    <input type="number" name="id" value="0" style="display: none;" readonly>
+
+    <button type="submit">Done</button>
+  </form>
+
+  <style>
+    .form_cover form textarea {
+      height: 200px;
+    }
+  </style>
+</section>
+{% endblock main %}
+
+
+{% block js %}
+<script>
+  document.querySelectorAll('select').forEach(el => {
+    el.innerHTML += `
+        <option value="news">news</option>
+        <option value="politics">politics</option>
+        <option value="business">business</option>
+        <option value="entertainment">entertainment</option>
+        <option value="sports">sports</option>
+        <option value="technology">technology</option>
+        <option value="opinion">opinion</option>
+        <option value="lifestyle">lifestyle</option>
+        <option value="gallery">gallery</option>
+        <option value="obituary">obituary</option>
+        `
+  })
+
+  var img_box_swiper = new Swiper('.img_box', {
+    allowTouchMove: false,
+  })
+
+  const img_box_swiper_nav = document.querySelectorAll('.form_cover form div .file_nav span')
+  img_box_swiper_nav.forEach((el, i) => {
+    el.classList.remove('change')
+    el.onclick = () => {
+      img_box_swiper.slideTo(i)
+      el.classList.add('change')
+      img_box_swiper_nav.forEach((mini, ii) => {
+        if (i != ii) {
+          mini.classList.remove('change')
+        }
+      })
+    }
+  })
+</script>
+<script>
+  const dis_image = document.querySelector('.dis_image')
+  const dis_video = document.querySelector('.form_cover form video')
+
+  const addImage = (el, el_p) => {
+    const [file] = el.files
+    var src = URL.createObjectURL(file)
+    dis_image.style.backgroundImage = `url(${src})`
+    dis_video.src = ''
+    document.getElementById('add_video').value = ''
+    document.getElementById('add_video').required = false
+    document.getElementById('add_image').required = true
+  }
+
+  const addVideo = (el) => {
+    const [file] = el.files
+    var src = URL.createObjectURL(file)
+    dis_video.src = src
+    dis_image.style.backgroundImage = ''
+    document.getElementById('add_image').value = ''
+    document.getElementById('add_image').required = false
+    document.getElementById('add_video').required = true
+  }
+</script>
+
+<script>
+  const program_form = document.querySelector('form')
+  const img_box = document.querySelector('.img_box')
+
+  const openForm = (day) => {
+    form_cover.classList.add('show')
+  }
+  const closeForm = () => {
+    form_cover.classList.remove('show')
+    dis_image.style.backgroundImage = ''
+    dis_video.src = ''
+    program_form.reset()
+  }
+</script>
+<script>
+  const editPost = (el) => {
+    var info = el.dataset
+    console.log(program_form.elements)
+    program_form.elements[2].value = info.title
+    program_form.elements[3].value = info.category
+    program_form.elements[4].value = info.content
+    if (info.type == 'image') {
+      dis_image.style.backgroundImage = `url(${info.image})`
+    } else {
+      img_box_swiper.slideTo(1)
+      dis_video.src = `${info.video}`
+    }
+    document.getElementById('add_image').required = false
+    document.getElementById('add_video').required = false
+    program_form.elements[7].value = info.source
+    program_form.elements[8].value = info.tags
+    program_form.elements[9].value = info.id
+    form_cover.classList.add('show')
+  }
+</script>
+{% endblock js %}

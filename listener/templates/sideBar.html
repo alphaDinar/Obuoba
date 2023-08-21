@@ -1,0 +1,71 @@
+<section class="sideBar">
+  <header>
+    <img src="https://res.cloudinary.com/dvnemzw0z/image/upload/v1692289104/logo_2_nxwecd.png">
+  </header>
+  <nav>
+    <a href=""> <i class="material-symbols-outlined">breaking_news</i> <span>News Feed</span> </a>
+    <a href=""> <i class="material-symbols-outlined">gavel</i> <span>Politics</span> </a>
+    <a href=""> <i class="material-symbols-outlined">payments</i> <span>Business</span> </a>
+    <a href=""> <i class="material-symbols-outlined">sentiment_satisfied</i> <span>Entertainment</span> </a>
+    <a href=""> <i class="material-symbols-outlined">sports_soccer</i> <span>Sports</span> </a>
+    <a href=""> <i class="material-symbols-outlined">usb</i> <span>Technology</span> </a>
+    <a href=""> <i class="material-symbols-outlined">topic</i> <span>Opinion</span> </a>
+    <a href=""> <i class="material-symbols-outlined">nightlife</i> <span>Lifestyle</span> </a>
+    <a href=""> <i class="material-symbols-outlined">image</i> <span>Gallery</span> </a>
+    <a href=""> <i class="material-symbols-outlined">deceased</i> <span>Obituary</span> </a>
+  </nav>
+  <footer>
+    <a href=""><i class="fa-brands fa-google"></i> <span>Google Podcast</span> </a>
+    <a href=""><i class="fa-brands fa-itunes"></i> <span>iTunes</span> </a>
+    <a href=""><i class="fa-brands fa-spotify"></i> <span>Spotify</span> </a>
+  </footer>
+</section>
+
+<style>
+  .sideBar {
+    width: 19%;
+    display: flex;
+    gap: 2rem 0;
+    flex-direction: column;
+    padding: 3vh 0;
+    align-items: center;
+    border-radius: 20px;
+    transition: 0.4s ease;
+  }
+
+  .sideBar header img {
+    width: 150px;
+  }
+
+  .sideBar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem 0;
+  }
+
+  .sideBar nav a,
+  .sideBar footer a {
+    display: flex;
+    font-size: 1.1rem;
+    align-items: center;
+    color: black;
+    gap: 0 0.5rem;
+  }
+
+  .sideBar footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem 0;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.sideBar a').forEach((el, i) => {
+    anime({
+      targets: el,
+      translateY: [-20, 0],
+      opacity: [0, 1],
+      delay: i * 50
+    })
+  })
+</script>

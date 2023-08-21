@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'listener/home.css' %}">
+{% endblock css %}
+
+
+{% block main %}
+
+<section class="main_player">
+  <div class="card">
+    <i id="tag">On Air</i>
+    <img src="{{program.image.url}}" alt="">
+    <p>
+      <span><i class="material-symbols-outlined">mic</i> <small>{{program.name}}</small></span>
+      <span><i class="material-symbols-outlined">schedule</i> <small>8:00 - 10:00</small></span>
+      <button class="material-symbols-outlined">play_arrow</button>
+    </p>
+    <div class="bars">
+      <small></small>
+      <small></small>
+      <small></small>
+      <small></small>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <span>News Updates</span>
+  <hr style="width: 100%; border-top: 2px solid darkgray;">
+</div>
+
+<section class="top_swiper swiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <a href=""
+        style="background-image: url(https://res.cloudinary.com/dvnemzw0z/image/upload/v1691328084/RadioProject/filarkdii12e03pn5kjc.jpg);">
+        <p>Henry Quartey fumes over filth in Accra; calls out MMDCEs</p>
+      </a>
+    </div>
+  </div>
+  <button class="material-symbols-outlined top_swiper_prev">chevron_left</button>
+  <button class="material-symbols-outlined top_swiper_next">chevron_right</button>
+</section>
+
+<section class="news_box">
+  {% for post in posts %}
+  <section class="news" data-link="{{post.slug}}">
+    <p>
+      <span>{{post.date_added|timesince}}</span>
+      <span>
+        <i class="material-symbols-outlined">payments</i>
+        Business
+      </span>
+    </p>
+    <h3>
+      {{post.title}}
+    </h3>
+    <div class="tag_box" data-tags="{{post.tags}}">
+    </div>
+    <div class="img_box">
+      {% if post.type == 'image' %}
+      <img src="{{post.image.url}}">
+      {% else %}
+      <video src="{{post.video.url}}" muted controls></video>
+      {% endif %}
+      <small style="color: rgb(107, 107, 107);">Source : {{post.source}}</small>
+      <p style="color: black;">{{post.content}}</p>
+      <nav>
+        <a href="view_news.html" class="fa-brands fa-facebook-f"></a>
+        <a class="fa-brands fa-twitter"></a>
+        <a class="fa-brands fa-whatsapp"></a>
+        <a class="fa-brands fa-linkedin"></a>
+        <a class="fa-brands fa-google"></a>
+      </nav>
+    </div>
+  </section>
+
+
+
+
+  {% endfor %}
+
+  <script>
+    const tag_boxes = document.querySelectorAll('.tag_box')
+
+    tag_boxes.forEach((tag_box) => {
+      let tags = tag_box.dataset.tags.split(',')
+      tags.forEach((el, i) => {
+        if (i < 3) {
+          var small_tag = document.createElement('small')
+          small_tag.innerHTML = el
+          tag_box.appendChild(small_tag)
+        }
+      })
+    })
+  </script>
+
+  <script>
+    const news_box = document.querySelector('.news_box');
+
+    [...news_box.children].forEach((el, i) => {
+      if ((i + 1) % 3 === 0) {
+        var test_ad = document.createElement('section')
+        test_ad.classList.add('ad')
+        var parentBox = el.parentNode
+        parentBox.insertBefore(test_ad, el)
+      }
+    })
+  </script>
+</section>
+{% endblock main %}
+
+
+{% block js %}
+<script>
+  const top_swiper_next = document.querySelector('.top_swiper_next')
+  const top_swiper_prev = document.querySelector('.top_swiper_prev')
+
+  const makeTopSwiper = (min) => {
+    var top_swiper = new Swiper('.top_swiper', {
+      loop: false,
+      slidesPerView: 2,
+      spaceBetween: 10,
+      navigation: {
+        nextEl: top_swiper_next,
+        prevEl: top_swiper_prev
+      }
+    })
+  }
+  makeTopSwiper()
+
+  document.querySelector('.top_swiper').onmouseenter = () => {
+    top_swiper_next.classList.add('change')
+    top_swiper_prev.classList.add('change')
+  }
+  document.querySelector('.top_swiper').onmouseleave = () => {
+    top_swiper_next.classList.remove('change')
+    top_swiper_prev.classList.remove('change')
+  }
+</script>
+<script>
+  const news = document.querySelectorAll('.news')
+  news.forEach((el) => {
+    el.onclick = () => {
+      window.location.href = `view_post/${el.dataset.link}`
+    }
+  })
+
+
+  document.querySelectorAll('.news video').forEach((el, i) => {
+    el.onplay = () => {
+      document.querySelectorAll('.news video').forEach((bel, ii) => {
+        if (i != ii) {
+          bel.pause()
+        }
+      })
+    }
+  })
+</script>
+{% endblock js %}

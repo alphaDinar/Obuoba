@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/eb75260fb3.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+    integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+    integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <title>OBUOBA RADIO</title>
+  <link rel="stylesheet" href="{% static 'base.css' %}">
+  {% block css %}
+
+  {% endblock css %}
+
+  <script>
+    const setMaxHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    setMaxHeight();
+
+    window.addEventListener('resize', setMaxHeight);
+  </script>
+</head>
+
+<body>
+  <section class="mobile_nav">
+    <img src="https://res.cloudinary.com/dvnemzw0z/image/upload/v1692289104/logo_2_nxwecd.png" alt="">
+    <span>OBUOBA FM</span>
+  </section>
+
+  <section class="top_nav">
+    <button class="material-symbols-outlined" style="cursor: pointer;" onclick="toggleSideBar()">menu</button>
+    <div class="left">
+      <small>Follow Us On</small>
+      <hr style="width: 80px; border-top: 2px solid darkgray;">
+      <div>
+        <a class="fa-brands fa-instagram"></a>
+        <a class="fa-brands fa-facebook"></a>
+        <a class="fa-brands fa-twitter"></a>
+        <a class="fa-brands fa-tiktok"></a>
+      </div>
+    </div>
+
+    <div class="player">
+      <p>
+        <span>Sunday Jams</span>
+        <small>8:00 - 10:00</small>
+      </p>
+      <button class="material-symbols-outlined">play_arrow</button>
+    </div>
+    <div class="right">
+      <input type="text" placeholder="Search">
+      <i class="material-symbols-outlined">search</i>
+    </div>
+  </section>
+
+  <section class="page">
+    {% include "sideBar.html" %}
+
+    <section class="main">
+      {% block main %}
+
+      {% endblock main %}
+
+      <section class="loader" tabindex="0">
+        <div></div>
+        <div></div>
+        <div></div>
+      </section>
+    </section>
+    {% include "panel.html" %}
+  </section>
+
+  <script>
+    const loader = document.querySelector('.loader')
+    const loaderAnime =
+      anime({
+        begin: () => {
+          loader.style.display = 'flex';
+        },
+        loop: true,
+        targets: '.loader div',
+        opacity: [0, 1],
+        scale: [0.5, 1],
+      })
+
+    window.onclick = () => {
+      loaderAnime.play()
+    }
+  </script>
+
+  {% block js %}
+
+  {% endblock js %}
+</body>
+
+</html>

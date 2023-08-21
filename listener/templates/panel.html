@@ -1,0 +1,228 @@
+<section class="panel">
+  <section class="players">
+    <section class="player_box">
+      <h4>On Air</h4>
+      <img src="images/radio.jpg" alt="">
+
+      <nav>
+        <p><i class="material-symbols-outlined">radio</i> <span>Sunday Jams</span></p>
+        <p><i class="material-symbols-outlined">timer</i> <span>6:00 - 8:00</span></p>
+        <button class="material-symbols-outlined">play_arrow</button>
+      </nav>
+
+      <div class="bars">
+        <small></small>
+        <small></small>
+        <small></small>
+        <small></small>
+      </div>
+    </section>
+
+    <section class="player_box">
+      <h4>Up Next</h4>
+      <img src="images/dj-wallpaper-wedding-songs-mp3.jpg" alt="">
+      <nav>
+        <p><i class="material-symbols-outlined">radio</i> <span>Sunday Jams</span></p>
+        <p><i class="material-symbols-outlined">timer</i> <span>8:00 - 12:00</span></p>
+      </nav>
+    </section>
+  </section>
+</section>
+<button id="playlist" class="material-symbols-outlined" style="cursor: pointer;"
+  onclick="togglePanel()">queue_music</button>
+
+<style>
+  .panel {
+    width: 25%;
+    border-radius: 20px;
+    padding: 3vh 2%;
+    border: 1px solid lightgray;
+    transition: 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem 0;
+  }
+
+  .players {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem 0;
+  }
+
+  .player_box {
+    width: 90%;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid darkgray;
+    position: relative;
+  }
+
+  .player_box img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px 5px 0 0;
+  }
+
+  .player_box nav {
+    width: 90%;
+    padding: 5px 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem 0;
+    align-items: flex-start;
+  }
+
+  .player_box nav p {
+    display: flex;
+    align-items: center;
+    gap: 0 0.5rem;
+  }
+
+  .player_box nav button {
+    width: 35px;
+    height: 35px;
+    font-size: 2rem;
+  }
+
+  .player_box .bars {
+    position: absolute;
+    display: flex;
+    bottom: 10px;
+    right: 10px;
+    gap: 0 1px;
+  }
+
+  .player_box .bars small {
+    display: block;
+    height: 25px;
+    width: 5px;
+    border-radius: 100px;
+    background: var(--var-bg);
+  }
+
+  .player_box h4 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: black;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 5px 0;
+    font-weight: 400;
+  }
+
+  @media all and (max-width:1700px) {
+    .panel {
+      width: 20%;
+    }
+  }
+
+
+  @media all and (max-width:1200px) {
+    .sideBar {
+      position: fixed;
+      opacity: 1;
+      background: var(--var-bg);
+      color: white;
+      z-index: 1000;
+      width: 200px;
+      top: 80px;
+      left: -250px;
+      border-radius: 0 15px 15px 0;
+      padding: 3vh 20px;
+    }
+
+    .sideBar header {
+      padding: 10px;
+      background: white;
+      border-radius: 100px;
+      border: 1px solid white;
+    }
+
+    .sideBar.change {
+      left: 0;
+    }
+
+    .sideBar nav a,
+    .sideBar footer a {
+      color: white;
+    }    
+  }
+
+
+  @media all and (max-width:1000px) {
+    .panel {
+      position: fixed;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      background-color: var(--var-bg);
+      border-radius: 0 15px 15px 0;
+      z-index: 1000;
+      left: 0;
+      border: none;
+      width: 220px;
+      padding: 3vh 20px;
+      left: -270px;
+    }
+
+    .panel.change {
+      left: 0;
+    }
+
+    .panel .player_box {
+      background: white;
+    }
+
+    #playlist {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  @media all and (max-width:650px) {
+    .sideBar,
+    .panel {
+      width: 80%;
+      padding: 3vh 7.5%;
+      margin: 0 2.5%;
+      height: calc(var(--screen) - 6.8vh - 70px);
+      left: -100%;
+      top: revert;
+      bottom: 70px;
+      transition: 0.5s ease;
+      border-radius: 10px;
+    }
+
+    .sideBar header img {
+      width: 100px;
+    }
+
+    .sideBar nav a,
+    .sideBar footer a {
+      font-size: 0.85rem;
+    }
+
+    .sideBar.change,
+    .panel.change {
+      left: 0;
+    }
+  }
+</style>
+
+<script>
+  const sideBar = document.querySelector('.sideBar')
+  const panel = document.querySelector('.panel')
+
+  const toggleSideBar = () => {
+    sideBar.classList.toggle('change')
+    panel.classList.remove('change')
+  }
+
+  const togglePanel = () => {
+    panel.classList.toggle('change')
+    sideBar.classList.remove('change')
+  }
+</script>

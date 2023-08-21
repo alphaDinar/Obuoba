@@ -1,0 +1,127 @@
+.form_cover {
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  overflow-y: auto;
+  position: fixed;
+  transition: 0.4s ease;
+  top: 0;
+  z-index: 1000;
+  right: -100%;
+}
+
+.form_cover.show {
+  right: 0;
+}
+
+.form_cover form {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: auto;
+  width: 40%;
+  padding: 1%;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.form_cover form div {
+  display: flex;
+  width: 100%;
+  gap: 0.5rem 0;
+  flex-direction: column;
+}
+
+.form_cover form div input[type='text'] {
+  width: 95%;
+  height: 40px;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+  padding: 5px 2.5%;
+}
+
+.form_cover form textarea {
+  resize: none;
+  width: 95%;
+  padding: 5px 2.5%;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+  overflow-y: auto;
+}
+
+.form_cover form .img_box {
+  width: 90%;
+  padding: 5%;
+  height: 200px;
+  border-radius: 5px;
+  background-position: center;
+  background-size: cover;
+  border: 1px solid darkgray;
+}
+.form_cover form .img_box, .form_cover .swiper-slide{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form_cover form button[type='submit'] {
+  height: 40px;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 100%;
+  background: rgb(12, 54, 97);
+  color: white;
+}
+
+.form_cover form button[type='button'] {
+  width: 40px;
+  height: 40px;
+  background: tomato;
+  color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  cursor: pointer;
+}
+.form_cover strong{
+  font-size: 1.5rem;
+}
+
+.img_box label {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.img_box label i {
+  font-size: 2rem;
+}
+
+@media all and (max-width:1300px) {
+  .form_cover form {
+    width: 60%;
+  }
+}
+
+@media all and (max-width:650px) {
+  .form_cover form {
+    width: 85%;
+    padding: 10px 2.5%;
+    border-radius: 5px;
+  }
+}
+
+@media all and (max-width:350px) {
+  .form_cover form {
+    width: 90%;
+  }
+}

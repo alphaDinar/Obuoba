@@ -1,0 +1,164 @@
+{% extends "manager_base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'manager/dash.css' %}">
+<link rel="stylesheet" href="{% static 'manager/manager_forms.css' %}">
+<style>
+  .program{
+    margin: 0;
+  }
+</style>
+{% endblock css %}
+
+{% block main %}
+<header>
+  <select>
+    <option value="">All</option>
+  </select>
+  <strong>Programs</strong>
+  <input type="text" placeholder="Search Program">
+</header>
+
+<section class="day_box_holder" data-prog_box="{{prog_box}}">
+  <script>
+    const day_box_holder = document.querySelector('.day_box_holder')
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const py_days = [6, 0, 1, 2, 3, 4, 5]
+    const daySelect = document.querySelector('header select')
+
+    daysOfWeek.forEach((day, i) => {
+      day_box_holder.innerHTML += `
+      <section class="day_box" data-day="${i}">
+      <h3>${daysOfWeek[i]}</h3>
+      <section class="list_box" id='p${i}' data-day="${i}">
+        <div class="add_program material-symbols-outlined" onclick="openForm(${i})">add</div>
+      </section>
+    </section>
+      `
+      daySelect.innerHTML += `
+        <option value='${i}'>${daysOfWeek[i]}</option>
+      `
+    })
+
+
+    let prog_box = JSON.parse(day_box_holder.dataset.prog_box)
+
+    prog_box.forEach((el, i) => {
+      var start_day = new Date(el.start_date).getDay()
+      var p_section = document.getElementById(`p${start_day}`)
+      p_section.innerHTML += `
+      <div class="program">
+        <img src="${el.image_url}" alt="">
+        <p>
+          <span><i class="material-symbols-outlined">mic</i> <small>${el.name}</small></span>
+          <span><i class="material-symbols-outlined">person_pin_circle</i> <small>${el.host}</small> </span>
+          <span><i class="material-symbols-outlined">schedule</i> <small>${el.start_date.split(' ')[1].substring(0, 5)} - ${el.end_date.split(' ')[1].substring(0, 5)}</small></span>
+        </p>
+        <nav>
+          <i class="material-symbols-outlined" onclick="editProg(${el.id}, ${start_day})">edit</i>
+          <i class="material-symbols-outlined" onclick="delItem(event.target, ${el.id}, '${el.name}', 'del_program')">delete</i>
+        </nav>
+      </div>
+      `
+    })
+
+    
+  </script>
+</section>
+
+<section class="form_cover">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <button type="button" class="material-symbols-outlined" onclick="closeForm()">close</button>
+    <strong></strong>
+    <input type="number" name="id" value="0" readonly style="display: none;">
+    <input type="text" name="py_day" style="display: none;" required>
+    <div>
+      <span>Name *</span>
+      <input type="text" name="name" required>
+    </div>
+    <div>
+      <span>Description *</span>
+      <textarea name="description" required></textarea>
+    </div>
+    <div>
+      <span>Host</span>
+      <input type="text" name="host">
+    </div>
+    <div>
+      <span>Image</span>
+      <div class="img_box">
+        <label for="add_image">
+          <i class="material-symbols-outlined">add_a_photo</i>
+          <input id="add_image" onchange="addImage(event.target, event.target.parentElement.parentElement)" name="image"
+            type="file" accept="image/*" style="height: 1px; width: 1px;" required>
+        </label>
+      </div>
+    </div>
+
+    <div>
+      From *:
+      <input type="time" name="start_time" required>
+      To *:
+      <input type="time" name="end_time" required>
+    </div>
+
+    <script>
+      const dis_image = document.querySelector('.img_box')
+
+      const addImage = (el, el_p) => {
+        const [file] = el.files
+        var src = URL.createObjectURL(file)
+        dis_image.style.backgroundImage = `url(${src})`
+      }
+    </script>
+
+    <button type="submit">Done</button>
+  </form>
+</section>
+
+
+<style>
+  .form_cover form textarea {
+    height: 100px;
+  }
+</style>
+{% endblock main %}
+
+
+{% block js %}
+<script>
+  const form_day = document.querySelector('form strong')
+  const program_form = document.querySelector('form')
+
+  const openForm = (day) => {
+    form_day.innerHTML = daysOfWeek[day]
+    document.querySelector('input[name="py_day"]').value = py_days[day]
+    form_cover.classList.add('show')
+  }
+  const closeForm = () => {
+    form_cover.classList.remove('show')
+    program_form.reset()
+    dis_image.style.backgroundImage = ''
+  }
+
+  const editProg=(id, day)=>{
+    prog_box.forEach(prog=>{
+      if(prog.id === id){
+        form_day.innerHTML = daysOfWeek[day]
+        program_form.elements[2].value = prog.id
+        program_form.elements[3].value = py_days[day]
+        program_form.elements[4].value = prog.name
+        program_form.elements[5].value = prog.description
+        program_form.elements[6].value = prog.host
+        program_form.elements[7].required = false
+        program_form.elements[8].value = prog.start_date.split(' ')[1].substring(0, 5)
+        program_form.elements[9].value = prog.end_date.split(' ')[1].substring(0, 5)
+        dis_image.style.backgroundImage = `url(${prog.image_url})`
+        form_cover.classList.add('show')
+      }
+    })
+  }
+</script>
+{% endblock js %}

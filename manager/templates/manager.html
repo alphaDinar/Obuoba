@@ -1,0 +1,105 @@
+{% extends "manager_base.html" %}
+
+
+{% block css %}
+<style>
+  .team_box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem 0;
+  }
+
+  .teams {
+    width: 100%;
+    display: flex;
+    gap: 0 2rem;
+    overflow-x: auto;
+  }
+
+  .team {
+    min-width: 80px;
+    min-height: 80px;
+    border-radius: 50%;
+    margin: 10px 0;
+    background-image: url(images/radio.jpg);
+    background-position: center;
+    background-size: cover;
+  }
+</style>
+{% endblock css %}
+
+
+{% block main %}
+<section class="team_box">
+  <h3>Team</h3>
+  <section class="teams">
+    <div class="team"></div>
+    <script>
+      for (var i = 0; i < 7; i++) {
+        document.querySelector('.teams').appendChild(document.querySelector('.team').cloneNode(true))
+      }
+    </script>
+  </section>
+</section>
+
+<section class="program_box">
+  <h3>Upcoming Programs</h3>
+  <button class="next_program material-symbols-outlined">chevron_right</button>
+  <button class="prev_program material-symbols-outlined">chevron_left</button>
+  <section class="programs">
+    {% for program in programs %}
+    <div class="program">
+      <img src="{{program.image.url}}" alt="">
+      <p>
+        <span><i class="material-symbols-outlined">mic</i> <small>{{program.name}}</small></span>
+        <span><i class="material-symbols-outlined">person_pin_circle</i> <small>{{program.host}}</small> </span>
+        <span><i class="material-symbols-outlined">calendar_month</i> <small>Monday's</small></span>
+        <span><i class="material-symbols-outlined">schedule</i> <small>{{program.start_date|date:'G:i'}} - {{program.end_date|date:'G:i'}}</small></span>
+      </p>
+    </div>
+    {% endfor %}
+  </section>
+</section>
+
+<section class="post_box">
+  <h3>Posts</h3>
+  <button class="next_post material-symbols-outlined">chevron_right</button>
+  <button class="prev_post material-symbols-outlined">chevron_left</button>
+  <section class="posts">
+    {% for post in posts %}
+    <div class="post">
+      {% if post.type == 'image' %}
+      <img src="{{post.image.url}}" alt="">
+      {% else %}
+      <video src="{{post.video.url}}"></video>
+      {% endif %}
+      <p>{{post.title}}</p>
+      <small>{{post.date_added|timesince}}</small>
+    </div>
+    {% endfor %}
+  </section>
+</section>
+{% endblock main %}
+
+
+{% block js %}
+<script>
+  const programs = document.querySelector('.programs')
+  const posts = document.querySelector('.posts')
+
+  document.querySelector('.next_program').onclick = () => {
+    programs.scrollLeft += 700;
+  }
+  document.querySelector('.prev_program').onclick = () => {
+    programs.scrollLeft -= 700;
+  }
+
+  document.querySelector('.next_post').onclick = () => {
+    posts.scrollLeft += 700;
+  }
+  document.querySelector('.prev_post').onclick = () => {
+    posts.scrollLeft -= 700;
+  }
+</script>
+{% endblock js %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+{% endblock css %}
+
+
+{% block main %}
+<section class="news_box">
+  <section class="news" data-link="{{post.slug}}">
+    <p>
+      <span>{{post.date_added|timesince}}</span>
+      <span>
+        <i class="material-symbols-outlined">payments</i>
+        Business
+      </span>
+    </p>
+    <h3>
+      {{post.title}}
+    </h3>
+    <div class="tag_box" data-tags="{{post.tags}}">
+    </div>
+    <div class="img_box">
+      {% if post.type == 'image' %}
+      <img src="{{post.image.url}}">
+      {% else %}
+      <video src="{{post.video.url}}" muted controls></video>
+      {% endif %}
+      <small style="color: rgb(107, 107, 107);">Source : {{post.source}}</small>
+      <p style="color: black;">{{post.content}}</p>
+      <nav>
+        <a href="view_news.html" class="fa-brands fa-facebook-f"></a>
+        <a class="fa-brands fa-twitter"></a>
+        <a class="fa-brands fa-whatsapp"></a>
+        <a class="fa-brands fa-linkedin"></a>
+        <a class="fa-brands fa-google"></a>
+      </nav>
+    </div>
+  </section>
+</section>
+{% endblock main %}
+
+
+{% block js %}
+<style>
+  .news_box {
+    background: white;
+  }
+</style>
+<script>
+  const tag_box = document.querySelector('.tag_box')
+
+  let tags = tag_box.dataset.tags.split(',')
+  tags.forEach((el, i) => {
+    if (i < 3) {
+      var small_tag = document.createElement('small')
+      small_tag.innerHTML = el
+      tag_box.appendChild(small_tag)
+    }
+  })
+</script>
+{% endblock js %}

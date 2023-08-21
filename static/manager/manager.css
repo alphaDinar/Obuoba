@@ -1,0 +1,188 @@
+.page {
+  display: flex;
+  justify-content: flex-end;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 1.7rem;
+}
+
+.main,
+.form_cover {
+  width: 75%;
+  height: 90vh;
+  padding: 5vh 2.5%;
+  display: flex;
+  flex-direction: column;
+  gap: 4vh 0;
+  overflow-y: auto;
+  transition: 0.4s ease;
+}
+
+.main.change,
+.form_cover.change {
+  width: 90%;
+}
+
+.program_box,
+.post_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.program_box button,
+.post_box button {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  background: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.program_box button:nth-child(2),
+.post_box button:nth-child(2) {
+  right: 0;
+}
+
+.programs,
+.posts {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  gap: 0 1rem;
+}
+
+.programs::-webkit-scrollbar,
+.posts::-webkit-scrollbar {
+  display: none;
+}
+
+.program {
+  min-width: 300px;
+  max-width: 300px;
+  margin: 10px 0;
+  border: 1px solid darkgray;
+}
+
+.program img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+}
+
+.program p {
+  width: 90%;
+  padding: 15px 5%;
+}
+
+.program p span {
+  display: flex;
+  align-items: center;
+  gap: 0 0.3rem;
+}
+
+.program p small {
+  font-size: 0.9rem;
+  color: rgb(50, 50, 50);
+}
+
+.post,
+.add_post {
+  min-width: 280px;
+  max-width: 280px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+  align-items: center;
+  align-items: flex-start;
+  gap: 5px 0;
+  border: 1px darkgray solid;
+  border-radius: 35px;
+}
+
+.post p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  margin: 0 2.5%;
+  width: 95%;
+  text-overflow: ellipsis;
+  max-height: 80px;
+  -webkit-box-orient: vertical;
+}
+
+.post nav {
+  width: 95%;
+  display: flex;
+  gap: 0 0.5rem;
+  margin: 0 2.5%;
+}
+
+.post small {
+  margin: 0 2.5%;
+}
+
+.post img, .post video {
+  width: 95%;
+  height: 150px;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.add_program {
+  min-width: 300px;
+  max-width: 300px;
+  height: 350px;
+  border: 1px solid darkgray;
+}
+
+.add_program,
+.add_post {
+  font-size: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+@media all and (max-width:1450px) {
+
+  .main,
+  .form_cover {
+    width: 90%;
+    padding: 5vh 5%;
+  }
+}
+
+@media all and (max-width:650px) {
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  .program_box button,
+  .post_box button {
+    display: none;
+  }
+}
+
+@media all and (max-width:350px) {
+
+  .program,
+  .post,
+  .add_program,
+  .add_post {
+    min-width: 90%;
+    max-width: 90%;
+  }
+}
