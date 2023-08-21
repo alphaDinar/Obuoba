@@ -14,7 +14,7 @@
     <img src="{{program.image.url}}" alt="">
     <p>
       <span><i class="material-symbols-outlined">mic</i> <small>{{program.name}}</small></span>
-      <span><i class="material-symbols-outlined">schedule</i> <small>8:00 - 10:00</small></span>
+      <span><i class="material-symbols-outlined">schedule</i> <small>{{program.start_date|date:'G:i'}} - {{program.end_date|date:'G:i'}}</small></span>
       <button class="material-symbols-outlined">play_arrow</button>
     </p>
     <div class="bars">
@@ -159,4 +159,35 @@
     }
   })
 </script>
+
+
+<script>
+  var program_start_date = new Date('{{program.start_date|date:"c"}}')
+  var program_start_day = program_start_date.getDate()
+  var program_start_hour = program_start_date.getHours()
+
+  var program_end_date = new Date('{{program.end_date|date:"c"}}')
+  var program_end_day = program_end_date.getDate()
+  var program_end_hour = program_end_date.getHours()
+
+  var today = new Date()
+  var cur_day = today.getDate()
+  var cur_hour = today.getHours()
+
+  console.log(program_start_day, cur_day)
+
+  if(cur_day > program_start_day){
+    console.log('send api to change')
+  }else if (cur_day === program_start_day) {
+    if(cur_hour > program_start_hour){
+      console.log('send api to change')
+    }else if (cur_hour === program_start_hour) {
+      console.log('change tag to on air')      
+    }else{
+      console.log(program_start_hour - cur_hour)
+    }
+  }
+
+</script>
+
 {% endblock js %}

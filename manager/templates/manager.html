@@ -43,6 +43,7 @@
   </section>
 </section>
 
+{% if programs %}  
 <section class="program_box">
   <h3>Upcoming Programs</h3>
   <button class="next_program material-symbols-outlined">chevron_right</button>
@@ -61,7 +62,9 @@
     {% endfor %}
   </section>
 </section>
+{% endif %}
 
+{% if posts %}  
 <section class="post_box">
   <h3>Posts</h3>
   <button class="next_post material-symbols-outlined">chevron_right</button>
@@ -80,6 +83,7 @@
     {% endfor %}
   </section>
 </section>
+{% endif %}
 {% endblock main %}
 
 

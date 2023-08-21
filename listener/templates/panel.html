@@ -2,11 +2,11 @@
   <section class="players">
     <section class="player_box">
       <h4>On Air</h4>
-      <img src="images/radio.jpg" alt="">
+      <img src="{{program.image.url}}" alt="">
 
       <nav>
-        <p><i class="material-symbols-outlined">radio</i> <span>Sunday Jams</span></p>
-        <p><i class="material-symbols-outlined">timer</i> <span>6:00 - 8:00</span></p>
+        <p><i class="material-symbols-outlined">radio</i> <span>{{program.name}}</span></p>
+        <p><i class="material-symbols-outlined">timer</i> <span>{{program.start_date|date:'G:i'}} - {{program.end_date|date:'G:i'}}</span></p>
         <button class="material-symbols-outlined">play_arrow</button>
       </nav>
 
@@ -20,10 +20,10 @@
 
     <section class="player_box">
       <h4>Up Next</h4>
-      <img src="images/dj-wallpaper-wedding-songs-mp3.jpg" alt="">
+      <img src="{{next_program.image.url}}" alt="">
       <nav>
-        <p><i class="material-symbols-outlined">radio</i> <span>Sunday Jams</span></p>
-        <p><i class="material-symbols-outlined">timer</i> <span>8:00 - 12:00</span></p>
+        <p><i class="material-symbols-outlined">radio</i> <span>{{next_program}}</span></p>
+        <p><i class="material-symbols-outlined">timer</i> <span>{{next_program.start_date|date:'G:i'}} - {{next_program.end_date|date:'G:i'}}</span></p>
       </nav>
     </section>
   </section>

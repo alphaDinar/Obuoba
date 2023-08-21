@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'manager/dash.css' %}">
 <link rel="stylesheet" href="{% static 'manager/manager_forms.css' %}">
 <style>
-  .program{
+  .program {
     margin: 0;
   }
 </style>
@@ -63,7 +63,7 @@
       `
     })
 
-    
+
   </script>
 </section>
 
@@ -116,6 +116,14 @@
 
     <button type="submit">Done</button>
   </form>
+
+  <section class="form_loader">
+    <div>
+      <small></small>
+      <small></small>
+      <small></small>
+    </div>
+  </section>
 </section>
 
 
@@ -143,9 +151,9 @@
     dis_image.style.backgroundImage = ''
   }
 
-  const editProg=(id, day)=>{
-    prog_box.forEach(prog=>{
-      if(prog.id === id){
+  const editProg = (id, day) => {
+    prog_box.forEach(prog => {
+      if (prog.id === id) {
         form_day.innerHTML = daysOfWeek[day]
         program_form.elements[2].value = prog.id
         program_form.elements[3].value = py_days[day]
@@ -160,5 +168,7 @@
       }
     })
   }
+
+  
 </script>
 {% endblock js %}
