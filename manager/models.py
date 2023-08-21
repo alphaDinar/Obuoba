@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.utils.text import slugify
 from django.utils import timezone
+from cloudinary.models import CloudinaryField
 
 class Program(models.Model):
     name = models.CharField(max_length=300)
@@ -9,7 +10,7 @@ class Program(models.Model):
     host = models.CharField(max_length=300)
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(default=timezone.now)
-    image = models.ImageField(default='default.jpg', upload_to='pics')
+    image = CloudinaryField("Image" ,folder='Obuoba', resource_type='auto')
     slug = models.SlugField(max_length=500, blank=True)
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -35,7 +36,7 @@ class Post(models.Model):
         ('obituary', 'obituary')
     )
     category = models.CharField(max_length=100, choices=CATEGORY, default='news')
-    image = models.ImageField(default='def.jpg', upload_to='images', blank=True)
+    image = CloudinaryField("Image" ,folder='Obuoba', resource_type='auto')
     video = models.FileField(default='vid.jpg', upload_to='TM/Scheme_video', validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])], blank=True)
     TYPE = (
         ('image', 'image'),

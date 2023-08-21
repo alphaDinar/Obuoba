@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+import cloudinary
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,6 +79,9 @@ DATABASES = {
     }
 }
 
+DATABASES = {
+    'default': dj_database_url.parse('postgres://obuoba_db_user:viy3WCQ3vyMXfaw7eNzHyikJ7qBPze8H@dpg-cjhlehr6fquc73dab7cg-a.oregon-postgres.render.com/obuoba_db')
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -128,6 +133,14 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'GMT'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+cloudinary.config(
+    cloud_name = 'dvnemzw0z',
+    api_key = '482295267852992',
+    api_secret = '9X_kzT8VXq9a4_UY6qTr6jQ1X1o',
+    secure = True
+)
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
