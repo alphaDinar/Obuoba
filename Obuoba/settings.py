@@ -65,8 +65,8 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'Obuoba.wsgi.application'
-ASGI_APPLICATION = 'Obuoba.asgi.application'
+WSGI_APPLICATION = 'Obuoba.wsgi.application'
+# ASGI_APPLICATION = 'Obuoba.asgi.application'
 
 
 # Database
