@@ -98,6 +98,50 @@
     window.onclick = () => {
       loaderAnime.play()
     }
+
+    const runAxios = (url, data) => {
+      axios.post(`${window.location.origin}/${url}`, {
+        data: data
+      },
+        { headers: { 'X-CSRFToken': '{{token}}' } }
+      )
+        .then(response => console.log(response.data))
+        .catch(error => console.log(error))
+    }
+
+    getTimeLeft = (target_date) => {
+      var new_today = new Date()
+      var timeLeft = target_date - new_today;
+      var daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      if (daysLeft < 10) {
+        daysLeft = `0${daysLeft}`
+      }
+      var hoursLeft = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      if (hoursLeft < 10) {
+        hoursLeft = `0${hoursLeft}`
+      }
+      var minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      if (minutesLeft < 10) {
+        minutesLeft = `0${minutesLeft}`
+      }
+      var secondsLeft = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      if (secondsLeft < 10) {
+        secondsLeft = `0${secondsLeft}`
+      }
+
+      let countdown = ''
+      if (timeLeft > 0) {
+        if (daysLeft > 0) {
+          countdown = `${daysLeft} : ${hoursLeft} : ${minutesLeft} : ${secondsLeft}`
+        } else {
+          countdown = `${hoursLeft} : ${minutesLeft} : ${secondsLeft}`
+        }
+      } else {
+        countdown = '00:00'
+      }
+
+      return countdown
+    }
   </script>
 
   {% block js %}

@@ -10,11 +10,12 @@
 
 <section class="main_player">
   <div class="card">
-    <i id="tag">On Air</i>
+    <i id="tag" class="cur_tag">On Air</i>
     <img src="{{program.image.url}}" alt="">
     <p>
       <span><i class="material-symbols-outlined">mic</i> <small>{{program.name}}</small></span>
-      <span><i class="material-symbols-outlined">schedule</i> <small>{{program.start_date|date:'G:i'}} - {{program.end_date|date:'G:i'}}</small></span>
+      <span><i class="material-symbols-outlined">schedule</i> <small>{{program.start_date|date:'G:i'}} -
+          {{program.end_date|date:'G:i'}}</small></span>
       <button class="material-symbols-outlined">play_arrow</button>
     </p>
     <div class="bars">
@@ -76,9 +77,6 @@
       </nav>
     </div>
   </section>
-
-
-
 
   {% endfor %}
 
@@ -162,32 +160,24 @@
 
 
 <script>
-  var program_start_date = new Date('{{program.start_date|date:"c"}}')
-  var program_start_day = program_start_date.getDate()
-  var program_start_hour = program_start_date.getHours()
-
-  var program_end_date = new Date('{{program.end_date|date:"c"}}')
-  var program_end_day = program_end_date.getDate()
-  var program_end_hour = program_end_date.getHours()
-
   var today = new Date()
-  var cur_day = today.getDate()
-  var cur_hour = today.getHours()
+  var program_start_date = new Date('{{program.start_date|date:"c"}}')
+  var program_end_date = new Date('{{program.end_date|date:"c"}}')
+  const cur_tags = document.querySelectorAll('.cur_tag')
 
-  console.log(program_start_day, cur_day)
-
-  if(cur_day > program_start_day){
-    console.log('send api to change')
-  }else if (cur_day === program_start_day) {
-    if(cur_hour > program_start_hour){
-      console.log('send api to change')
-    }else if (cur_hour === program_start_hour) {
-      console.log('change tag to on air')      
-    }else{
-      console.log(program_start_hour - cur_hour)
-    }
+  if (today > program_end_date) {
+    runAxios('schedule_program', '{{program.id}}')
+  } else if (today >= program_start_date && program_end_date >= today) {
+    cur_tags.forEach((el) => {
+      el.innerHTML = 'On Air'
+    })
+  } else if (program_start_date > today) {
+    setInterval(() => {
+      cur_tags.forEach((el) => {
+        el.innerHTML = getTimeLeft(program_start_date)
+      })
+    }, 500)
   }
-
 </script>
 
 {% endblock js %}
