@@ -42,18 +42,6 @@ def programs(request):
     prog_box = []
     for prog in Program.objects.all().order_by('start_date'):
         prog_box.append(fix_prog_json(prog))
-    
-
-    # print(Program.objects.all())
-    for prog in Program.objects.all():
-        new_prog = Program()
-        new_prog.name = prog.name
-        new_prog.description = prog.description
-        new_prog.image = prog.image
-        new_prog.host = prog.host
-        new_prog.start_date = prog.start_date + timedelta(days=1)
-        new_prog.end_date = prog.end_date + timedelta(days=1)
-        new_prog.save()
 
     if request.method == 'POST':
         if int(request.POST['id']) == 0:
