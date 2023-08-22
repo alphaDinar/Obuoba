@@ -34,12 +34,14 @@
 
 <section class="top_swiper swiper">
   <div class="swiper-wrapper">
+    {% for post in posts_rev %}
     <div class="swiper-slide">
-      <a href=""
-        style="background-image: url(https://res.cloudinary.com/dvnemzw0z/image/upload/v1691328084/RadioProject/filarkdii12e03pn5kjc.jpg);">
-        <p>Henry Quartey fumes over filth in Accra; calls out MMDCEs</p>
+      <a href="{% url 'view_post_page' post.slug %}"
+        style="background-image: url({{post.image.url}});">
+        <p>{{post.title}}</p>
       </a>
     </div>
+    {% endfor %}
   </div>
   <button class="material-symbols-outlined top_swiper_prev">chevron_left</button>
   <button class="material-symbols-outlined top_swiper_next">chevron_right</button>

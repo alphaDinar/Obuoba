@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
+from django.contrib import messages
 from .models import Program,Post
 from datetime import datetime,timedelta
 import json
@@ -43,17 +44,20 @@ def programs(request):
         prog_box.append(fix_prog_json(prog))
     
     if request.method == 'POST':
-        if int(request.POST['id']) == 0:
-            program = create_program(request, Program())
-            program.image = request.FILES['image']
-            program.save()
-            return redirect('programs_page')
+        if Program.objects.filter(name=request.POST.get('name').upper()).exists():
+           messages.error(request,'program already exists')
         else:
-            program = create_program(request, Program.objects.get(id=int(request.POST.get('id'))))
-            if 'image' in request.FILES:
+            if int(request.POST['id']) == 0:
+                program = create_program(request, Program())
                 program.image = request.FILES['image']
-            program.save()
-            return redirect('programs_page')
+                program.save()
+                return redirect('programs_page')
+            else:
+                program = create_program(request, Program.objects.get(id=int(request.POST.get('id'))))
+                if 'image' in request.FILES:
+                    program.image = request.FILES['image']
+                program.save()
+                return redirect('programs_page')
     context = {
         'token' : get_token(request),
         'prog_box' : json.dumps(prog_box)
@@ -75,26 +79,29 @@ def create_post(request, post):
 
 def posts(request):
     if request.method == 'POST':
-        if int(request.POST.get('id')) == 0:            
-            post = create_post(request, Post())
-            if 'image' in request.FILES:
-                post.type = 'image'
-                post.image = request.FILES['image']
-            else:
-                post.type = 'video'
-                post.video = request.FILES['video']
-            post.save()
-            return redirect('posts_page')
+        if Post.objects.filter(title=request.POST.get('title')).exists():
+            messages.error(request, 'Post already exists')
         else:
-            post = create_post(request, Post.objects.get(id=int(request.POST.get('id'))))
-            if 'image' in request.FILES:
-                post.type = 'image'
-                post.image = request.FILES['image']
-            elif 'video' in request.FILES:
-                post.type = 'video'
-                post.video = request.FILES['video']
-            post.save()
-            return redirect('posts_page')
+            if int(request.POST.get('id')) == 0:            
+                post = create_post(request, Post())
+                if 'image' in request.FILES:
+                    post.type = 'image'
+                    post.image = request.FILES['image']
+                else:
+                    post.type = 'video'
+                    post.video = request.FILES['video']
+                post.save()
+                return redirect('posts_page')
+            else:
+                post = create_post(request, Post.objects.get(id=int(request.POST.get('id'))))
+                if 'image' in request.FILES:
+                    post.type = 'image'
+                    post.image = request.FILES['image']
+                elif 'video' in request.FILES:
+                    post.type = 'video'
+                    post.video = request.FILES['video']
+                post.save()
+                return redirect('posts_page')
     context = {
         'token' : get_token(request),
         'posts' : Post.objects.all()

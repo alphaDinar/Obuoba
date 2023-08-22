@@ -19,6 +19,7 @@ def home(request):
    context = {
       'token' : get_token(request),
       'posts' : posts,
+      'posts_rev' : Post.objects.all().order_by('-id')[:9],
       'program' : Program.objects.order_by('start_date').first(),
       'next_program' : next_program,
    }

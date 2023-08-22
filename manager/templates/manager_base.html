@@ -108,6 +108,18 @@
       border-radius: 50%;
       background: white;
     }
+
+    .error_box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: calc(100% - 20px);
+      padding: 8px 10px;
+      text-align: center;
+      font-weight: 600;
+      background: rgb(255, 225, 222);
+      color: salmon;
+    }
   </style>
   {% block css %}
 
@@ -127,9 +139,21 @@
     </nav>
   </section>
 
+
+
+
+
+
   <section class="page">
     {% include "manager_sideBar.html" %}
-    <section class="main">
+    <section class="main" style="position: relative;">
+      {% if messages %}
+      {% for message in messages %}
+      <section class="error_box">
+        {{message}}
+      </section>
+      {% endfor %}
+      {% endif %}
       {% block main %}
 
       {% endblock main %}
