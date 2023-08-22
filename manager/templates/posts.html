@@ -77,10 +77,17 @@
     <small>{{post.date_added|date:'jS F, Y'}} | {{post.date_added|timesince}}</small>
     <p>{{post.title}}</p>
     <nav>
+      {% if post.type == 'image' %}
       <i class="material-symbols-outlined" data-id="{{post.id}}" data-title="{{post.title}}"
-        data-category="{{post.category}}" data-content="{{post.content}}" data-type="{{post.type}}" {% if
-        post.type=='image' %} data-image="{{post.image.url}}" {% else %} data-video="{{post.video.url}}" {% endif %}
-        data-source="{{post.source}}" data-tags="{{post.tags}}" onclick="editPost(event.target)">edit</i>
+        data-category="{{post.category}}" data-content="{{post.content}}" data-type="{{post.type}}"
+        data-image="{{post.image.url}}" data-source="{{post.source}}" data-tags="{{post.tags}}"
+        onclick="editPost(event.target)">edit</i>
+      {% else %}
+      <i class="material-symbols-outlined" data-id="{{post.id}}" data-title="{{post.title}}"
+        data-category="{{post.category}}" data-content="{{post.content}}" data-type="{{post.type}}"
+        data-video="{{post.video.url}}" data-source="{{post.source}}" data-tags="{{post.tags}}"
+        onclick="editPost(event.target)">edit</i>
+      {% endif %}
       <i class="material-symbols-outlined"
         onclick="delItem(event.target, '{{post.id}}' , '{{post.title}}', 'del_post')">delete</i>
     </nav>
@@ -237,7 +244,6 @@
 <script>
   const editPost = (el) => {
     var info = el.dataset
-    console.log(program_form.elements)
     program_form.elements[2].value = info.title
     program_form.elements[3].value = info.category
     program_form.elements[4].value = info.content
