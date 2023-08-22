@@ -53,11 +53,11 @@
 
 {% block main %}
 <header>
-  <select>
-    <option value="">All</option>
+  <select onchange="filterPost(event.target.value)">
+    <option value="all">All</option>
   </select>
   <strong>Posts</strong>
-  <input type="text" placeholder="Search Post">
+  <input type="text" placeholder="Search Post" oninput="searchPost(event.target.value.toLowerCase())">
 </header>
 
 <section class="list_box">
@@ -67,7 +67,7 @@
 
 
   {% for post in posts %}
-  <div class="post">
+  <div class="post" data-name="{{post.title}}" data-cat="{{post.category}}">
     <small>{{post.category}}</small>
     {% if post.type == 'image' %}
     <img src="{{post.image.url}}" alt="">
@@ -78,12 +78,8 @@
     <p>{{post.title}}</p>
     <nav>
       <i class="material-symbols-outlined" data-id="{{post.id}}" data-title="{{post.title}}"
-        data-category="{{post.category}}" data-content="{{post.content}}" data-type="{{post.type}}" 
-        {% if post.type == 'image' %} 
-        data-image="{{post.image.url}}" 
-        {% else %} 
-        data-video="{{post.video.url}}" 
-        {% endif %}
+        data-category="{{post.category}}" data-content="{{post.content}}" data-type="{{post.type}}" {% if
+        post.type=='image' %} data-image="{{post.image.url}}" {% else %} data-video="{{post.video.url}}" {% endif %}
         data-source="{{post.source}}" data-tags="{{post.tags}}" onclick="editPost(event.target)">edit</i>
       <i class="material-symbols-outlined"
         onclick="delItem(event.target, '{{post.id}}' , '{{post.title}}', 'del_post')">delete</i>
@@ -178,7 +174,7 @@
         <option value="lifestyle">lifestyle</option>
         <option value="gallery">gallery</option>
         <option value="obituary">obituary</option>
-        `
+    `
   })
 
   var img_box_swiper = new Swiper('.img_box', {
@@ -257,6 +253,38 @@
     program_form.elements[8].value = info.tags
     program_form.elements[9].value = info.id
     form_cover.classList.add('show')
+  }
+</script>
+
+<script>
+  const posts = document.querySelectorAll('.post')
+
+  const filterPost = (val) => {
+    if (val === 'all') {
+      posts.forEach((el) => {
+        el.style.display = 'flex'
+      })
+    } else {
+      posts.forEach((el) => {
+        var el_cat = el.dataset.cat
+        if (el_cat === val) {
+          el.style.display = 'flex'
+        } else {
+          el.style.display = 'none'
+        }
+      })
+    }
+  }
+
+  const searchPost = (val) => {
+    posts.forEach((el) => {
+      var post_name = el.dataset.name.toLowerCase()
+      if (post_name.includes(val)) {
+        el.style.display = 'flex'
+      } else {
+        el.style.display = 'none'
+      }
+    })
   }
 </script>
 {% endblock js %}

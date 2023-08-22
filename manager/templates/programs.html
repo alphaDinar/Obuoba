@@ -14,10 +14,10 @@
 {% block main %}
 <header>
   <select onchange="filterDay(event.target.value)">
-    <option value="">All</option>
+    <option value="all">All</option>
   </select>
   <strong>Programs</strong>
-  <input type="text" placeholder="Search Program">
+  <input type="text" placeholder="Search Program" oninput="searchProgram(event.target.value.toLowerCase())">
 </header>
 
 <section class="day_box_holder" data-prog_box="{{prog_box}}">
@@ -45,7 +45,7 @@
       var start_day = new Date(el.start_date).getDay()
       var p_section = document.getElementById(`p${start_day}`)
       p_section.innerHTML += `
-      <div class="program">
+      <div class="program" data-name="${el.name}" data-host="${el.host}">
         <img src="${el.image_url}" alt="">
         <p>
           <span><i class="material-symbols-outlined">mic</i> <small>${el.name}</small></span>
@@ -67,16 +67,6 @@
     })
   </script>
 </section>
-
-
-<script>
-  const day_boxes = document.querySelectorAll('.day_box')
-
-  const filterDay = (val) => {
-    console.log(val)
-    console.log(day_boxes)
-  }
-</script>
 
 <section class="form_cover">
   <form method="post" enctype="multipart/form-data">
@@ -147,6 +137,40 @@
 
 
 {% block js %}
+
+<script>
+  const day_boxes = document.querySelectorAll('.day_box')
+
+  const filterDay = (val) => {
+    if (val === 'all') {
+      day_boxes.forEach(el => {
+        el.style.display = 'flex'
+      })
+    } else {
+      day_boxes.forEach((el, i) => {
+        if (el.dataset.day === val) {
+          el.style.display = 'flex'
+        } else {
+          el.style.display = 'none'
+        }
+      })
+    }
+  }
+
+  const programs = document.querySelectorAll('.program')
+  const searchProgram = (val) => {
+    programs.forEach((el) => {
+      var el_name = el.dataset.name.toLowerCase()
+      var el_host = el.dataset.host.toLowerCase()
+      if (el_name.includes(val) || el_host.includes(val)) {
+        el.style.display = 'block'
+      } else {
+        el.style.display = 'none'
+      }
+    })
+  }
+</script>
+
 <script>
   const form_day = document.querySelector('form strong')
   const program_form = document.querySelector('form')
@@ -179,7 +203,5 @@
       }
     })
   }
-
-
 </script>
 {% endblock js %}
