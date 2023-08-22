@@ -13,7 +13,7 @@
 
 {% block main %}
 <header>
-  <select>
+  <select onchange="filterDay(event.target.value)">
     <option value="">All</option>
   </select>
   <strong>Programs</strong>
@@ -31,16 +31,13 @@
       day_box_holder.innerHTML += `
       <section class="day_box" data-day="${i}">
       <h3>${daysOfWeek[i]}</h3>
-      <section class="list_box" id='p${i}' data-day="${i}">
-        <div class="add_program material-symbols-outlined" onclick="openForm(${i})">add</div>
-      </section>
+      <section class="list_box" id='p${i}' data-day="${i}"></section>
     </section>
       `
       daySelect.innerHTML += `
         <option value='${i}'>${daysOfWeek[i]}</option>
       `
     })
-
 
     let prog_box = JSON.parse(day_box_holder.dataset.prog_box)
 
@@ -63,9 +60,23 @@
       `
     })
 
-
+    daysOfWeek.forEach((day, i) => {
+      document.querySelector(`#p${i}`).innerHTML += `
+        <div class="add_program material-symbols-outlined" onclick="openForm(${i})">add</div>
+      `
+    })
   </script>
 </section>
+
+
+<script>
+  const day_boxes = document.querySelectorAll('.day_box')
+
+  const filterDay = (val) => {
+    console.log(val)
+    console.log(day_boxes)
+  }
+</script>
 
 <section class="form_cover">
   <form method="post" enctype="multipart/form-data">
@@ -169,6 +180,6 @@
     })
   }
 
-  
+
 </script>
 {% endblock js %}
