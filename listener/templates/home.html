@@ -7,7 +7,6 @@
 
 
 {% block main %}
-
 <section class="main_player">
   <div class="card">
     <i id="tag" class="cur_tag"></i>
@@ -36,8 +35,7 @@
   <div class="swiper-wrapper">
     {% for post in posts_rev %}
     <div class="swiper-slide">
-      <a href="{% url 'view_post_page' post.slug %}"
-        style="background-image: url({{post.image.url}});">
+      <a href="{% url 'view_post_page' post.slug %}" style="background-image: url({{post.image.url}});">
         <p>{{post.title}}</p>
       </a>
     </div>
@@ -51,10 +49,9 @@
   {% for post in posts %}
   <section class="news" data-link="{{post.slug}}">
     <p>
-      <span>{{post.date_added|timesince}}</span>
+      <span style="font-size: 0.9rem;">{{post.date_added|timesince}} ago</span>
       <span>
-        <i class="material-symbols-outlined">payments</i>
-        Business
+        <i class="material-symbols-outlined">steppers</i>{{post.category}}
       </span>
     </p>
     <h3>
@@ -83,6 +80,8 @@
   {% endfor %}
 
   <script>
+    const news_box = document.querySelector('.news_box')
+
     const tag_boxes = document.querySelectorAll('.tag_box')
 
     tag_boxes.forEach((tag_box) => {
@@ -98,16 +97,18 @@
   </script>
 
   <script>
-    const news_box = document.querySelector('.news_box');
+    const fixAdBox = (news_box) => {
+      [...news_box.children].forEach((el, i) => {
+        if ((i + 1) % 3 === 0) {
+          var test_ad = document.createElement('section')
+          test_ad.classList.add('ad')
+          var parentBox = el.parentNode
+          parentBox.insertBefore(test_ad, el)
+        }
+      })
+    }
 
-    [...news_box.children].forEach((el, i) => {
-      if ((i + 1) % 3 === 0) {
-        var test_ad = document.createElement('section')
-        test_ad.classList.add('ad')
-        var parentBox = el.parentNode
-        parentBox.insertBefore(test_ad, el)
-      }
-    })
+    fixAdBox(document.querySelector('.news_box'))
   </script>
 </section>
 {% endblock main %}
@@ -141,44 +142,120 @@
   }
 </script>
 <script>
-  const news = document.querySelectorAll('.news')
-  news.forEach((el) => {
-    el.onclick = () => {
-      window.location.href = `view_post/${el.dataset.link}`
-    }
-  })
+
+  const setNewsLink = (news) => {
+    news.forEach((el) => {
+      el.onclick = () => {
+        window.location.href = `view_post/${el.dataset.link}`
+      }
+    })
+  }
+  setNewsLink(document.querySelectorAll('.news'))
 
 
-  document.querySelectorAll('.news video').forEach((el, i) => {
-    el.onplay = () => {
-      document.querySelectorAll('.news video').forEach((bel, ii) => {
-        if (i != ii) {
-          bel.pause()
-        }
-      })
-    }
-  })
+  const oneVideo = (videos) => {
+    videos.forEach((el, i) => {
+      el.onplay = () => {
+        videos.forEach((bel, ii) => {
+          if (i != ii) {
+            bel.pause()
+          }
+        })
+      }
+    })
+  }
+  oneVideo(document.querySelectorAll('.news video'))
 </script>
+
 
 <script>
-  var today = new Date()
-  var program_start_date = new Date('{{program.start_date|date:"c"}}')
-  var program_end_date = new Date('{{program.end_date|date:"c"}}')
-  const cur_tags = document.querySelectorAll('.cur_tag')
+  const page = document.querySelector('.page')
 
-  if (today > program_end_date) {
-    runAxios('schedule_program', '{{program.id}}')
-  } else if (today >= program_start_date && program_end_date >= today) {
-    cur_tags.forEach((el) => {
-      el.innerHTML = 'On Air'
-    })
-  } else if (program_start_date > today) {
-    setInterval(() => {
-      cur_tags.forEach((el) => {
-        el.innerHTML = getTimeLeft(program_start_date)
-      })
-    }, 500)
+
+  const handleScrolls = () => {
+    if (window.innerWidth > 650) {
+      window.onscroll = () => {
+        checkWindowEnd()
+      }
+    } else {
+      page.onscroll = () => {
+        checkPageEnd()
+      };
+    }
+  }
+  handleScrolls()
+
+
+  const checkWindowEnd = () => {
+    const documentHeight = document.documentElement.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const scrollPosition = window.scrollY || window.pageYOffset;
+
+    if (scrollPosition + viewportHeight >= documentHeight) {
+      console.log("Window end reached!");
+      loaderAnime.play()
+      var news_count = document.querySelectorAll('.news').length
+      runAxios('more_posts', news_count)
+      console.log(news_box)
+    }
+  }
+
+  const checkPageEnd = () => {
+    const divHeight = page.scrollHeight;
+    const divScrollPosition = page.scrollTop;
+
+    if (divScrollPosition + page.clientHeight >= divHeight) {
+      console.log("Div end reached!");
+      loaderAnime.play()
+      var news_count = document.querySelectorAll('.news').length
+      runAxios('more_posts', news_count)
+    }
   }
 </script>
+<script>
+  const handleData = (data) => {
+    let more_prog = JSON.parse(data.test)
+    news_box.innerHTML = ''
+    more_prog.forEach((post) => {
+      if (post.type == 'image') {
+        var media_obj = `<img src="${post.media_url}">`
+      } else {
+        var media_obj = `<video src="${post.media_url}" controls muted></video>`
+      }
+
+      news_box.innerHTML += `
+          <section class="news" data-link="${post.slug}">
+            <p>
+              <span style="font-size: 0.9rem;">${post.time_since} ago</span>
+              <span>
+                <i class="material-symbols-outlined">steppers</i>${post.category}
+              </span>
+            </p>
+            <h3>
+              ${post.title}
+            </h3>
+            <div class="tag_box" data-tags="${post.tags}">
+            </div>
+            <div class="img_box">
+              ${media_obj}
+              <small style="color: rgb(107, 107, 107);">Source : ${post.source}</small>
+              <p style="color: black;">${post.content}</p>
+              <nav>
+                <a href="view_news.html" class="fa-brands fa-facebook-f"></a>
+                <a class="fa-brands fa-twitter"></a>
+                <a class="fa-brands fa-whatsapp"></a>
+                <a class="fa-brands fa-linkedin"></a>
+                <a class="fa-brands fa-google"></a>
+              </nav>
+            </div>
+          </section>
+          `
+    })
+    setNewsLink(document.querySelectorAll('.news'))
+    oneVideo(document.querySelectorAll('.news video'))
+    fixAdBox(document.querySelector('.news_box'))
+  }
+</script>
+
 
 {% endblock js %}

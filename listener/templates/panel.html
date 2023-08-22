@@ -6,7 +6,8 @@
 
       <nav>
         <p><i class="material-symbols-outlined">radio</i> <span>{{program.name}}</span></p>
-        <p><i class="material-symbols-outlined">timer</i> <span>{{program.start_date|date:'G:i'}} - {{program.end_date|date:'G:i'}}</span></p>
+        <p><i class="material-symbols-outlined">timer</i> <span>{{program.start_date|date:'G:i'}} -
+            {{program.end_date|date:'G:i'}}</span></p>
         <button class="material-symbols-outlined">play_arrow</button>
       </nav>
 
@@ -23,7 +24,8 @@
       <img src="{{next_program.image.url}}" alt="">
       <nav>
         <p><i class="material-symbols-outlined">radio</i> <span>{{next_program}}</span></p>
-        <p><i class="material-symbols-outlined">timer</i> <span>{{next_program.start_date|date:'G:i'}} - {{next_program.end_date|date:'G:i'}}</span></p>
+        <p><i class="material-symbols-outlined">timer</i> <span>{{next_program.start_date|date:'G:i'}} -
+            {{next_program.end_date|date:'G:i'}}</span></p>
       </nav>
     </section>
   </section>
@@ -86,7 +88,7 @@
     font-size: 2rem;
   }
 
-  .player_box .bars {
+  .player_box .bars, .main_player .bars {
     position: absolute;
     display: flex;
     bottom: 10px;
@@ -94,7 +96,7 @@
     gap: 0 1px;
   }
 
-  .player_box .bars small {
+  .player_box .bars small, .main_player .bars small {
     display: block;
     height: 25px;
     width: 5px;
@@ -145,10 +147,10 @@
       left: 0;
     }
 
-    .sideBar nav a,
+    .sideBar form a,
     .sideBar footer a {
       color: white;
-    }    
+    }
   }
 
 
@@ -183,6 +185,7 @@
   }
 
   @media all and (max-width:650px) {
+
     .sideBar,
     .panel {
       width: 80%;
@@ -225,4 +228,25 @@
     panel.classList.toggle('change')
     sideBar.classList.remove('change')
   }
+</script>
+
+<script>
+  const cat_form = document.querySelector('.sideBar form')
+  const cat_in = document.querySelector('input[name="category"]')
+  const cat_lis = document.querySelectorAll('form a')
+
+  cat_lis.forEach((el) => {
+    el.onclick = () => {
+      if (window.location.href === `${window.location.origin}/`) {
+        cat_in.value = el.dataset.cat
+        cat_form.submit()
+        news_box.style.display = 'none';
+        loaderAnime.play()
+      } else {
+        window.location.href = '/'
+      }
+    }
+
+  })
+
 </script>

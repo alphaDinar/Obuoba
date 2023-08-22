@@ -37,7 +37,7 @@ class Post(models.Model):
     )
     category = models.CharField(max_length=100, choices=CATEGORY, default='news')
     image = CloudinaryField("Image" ,folder='Obuoba', resource_type='auto')
-    video = models.FileField(default='vid.jpg', upload_to='TM/Scheme_video', validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])], blank=True)
+    video = CloudinaryField("Video" ,folder='Obuoba', resource_type='auto')
     TYPE = (
         ('image', 'image'),
         ('video', 'video'),
