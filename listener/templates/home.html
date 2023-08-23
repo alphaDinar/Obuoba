@@ -9,14 +9,24 @@
 {% block main %}
 <section class="main_player">
   <div class="card">
-    <i id="tag" class="cur_tag"></i>
+    <div id="tag" class="cur_tag">
+      <span></span>
+      <div class="bars" style="position: revert;">
+        <small></small>
+        <small></small>
+        <small></small>
+        <small></small>
+      </div>
+    </div>
+
     <img src="{{program.image.url}}" alt="">
     <p>
-      <span><i class="material-symbols-outlined">mic</i> <small>{{program.name}}</small></span>
+      <span><i class="material-symbols-outlined">radio</i> <small>{{program.name}}</small></span>
       <span><i class="material-symbols-outlined">schedule</i> <small>{{program.start_date|date:'G:i'}} -
           {{program.end_date|date:'G:i'}}</small></span>
       <button class="material-symbols-outlined">play_arrow</button>
     </p>
+
     <div class="bars">
       <small></small>
       <small></small>

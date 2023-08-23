@@ -21,7 +21,17 @@
   {% block css %}
 
   {% endblock css %}
+  <style>
+    #tag {
+      display: flex;
+      gap: 0 1rem;
+      align-items: center;
+    }
 
+    #tag div small {
+      background: white;
+    }
+  </style>
   <script>
     const setMaxHeight = () => {
       const vh = window.innerHeight * 0.01;
@@ -34,10 +44,16 @@
 </head>
 
 <body>
-  <a href="{% url 'homepage' %}" class="mobile_nav">
-    <img src="https://res.cloudinary.com/dvnemzw0z/image/upload/v1692289104/logo_2_nxwecd.png" alt="">
-    <span>OBUOBA FM</span>
-  </a>
+  <section class="mobile_nav">
+    <a href="{% url 'homepage' %}">
+      <img src="https://res.cloudinary.com/dvnemzw0z/image/upload/v1692289104/logo_2_nxwecd.png" alt="">
+    </a>
+    <p>
+      <span>OBUOBA FM</span>
+      <a href="tel:+233531387554"><i class="material-symbols-outlined" style="font-size: 0.8rem;">phone</i> 053 138
+        7554</a>
+    </p>
+  </section>
 
   <section class="top_nav">
     <button class="material-symbols-outlined" style="cursor: pointer;" onclick="toggleSideBar()">menu</button>
@@ -155,12 +171,12 @@
       runAxios('schedule_program', '{{program.id}}')
     } else if (today >= program_start_date && program_end_date >= today) {
       cur_tags.forEach((el) => {
-        el.innerHTML = 'On Air'
+        el.children[0].innerHTML = 'On Air'
       })
     } else if (program_start_date > today) {
       setInterval(() => {
         cur_tags.forEach((el) => {
-          el.innerHTML = getTimeLeft(program_start_date)
+          el.children[0].innerHTML = getTimeLeft(program_start_date)
         })
       }, 500)
     }

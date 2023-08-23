@@ -202,14 +202,14 @@ section::-webkit-scrollbar-thumb {
 }
 
 .mobile_nav {
-  width: 90%;
-  padding: 5px 5%;
+  width: 80%;
+  padding: 5px 10%;
   height: 40px;
   z-index: 1000;
   display: none;
   align-items: center;
-  gap: 0 1rem;
-  justify-content: center;
+  gap: 0 1.5rem;
+  justify-content: flex-end;
   background: var(--var-bg);
 }
 
@@ -220,9 +220,18 @@ section::-webkit-scrollbar-thumb {
 }
 
 .mobile_nav span {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: white;
   letter-spacing: 1px;
+}
+.mobile_nav p {
+  display: flex;
+  gap: 0 0 ;
+  flex-direction: column;
+}
+.mobile_nav p a {
+  font-size: 0.9rem;
+  color: white;
 }
 
 #playlist {
