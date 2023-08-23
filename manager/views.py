@@ -76,10 +76,10 @@ def create_post(request, post):
 
 def posts(request):
     if request.method == 'POST':
-        if Post.objects.filter(title=request.POST.get('title')).exists():
-            messages.error(request, 'Post already exists')
-        else:
-            if int(request.POST.get('id')) == 0:            
+        if int(request.POST.get('id')) == 0:
+            if Post.objects.filter(title=request.POST.get('title')).exists():
+                messages.error(request, 'Post already exists')
+            else:            
                 post = create_post(request, Post())
                 if 'image' in request.FILES:
                     post.type = 'image'
@@ -89,16 +89,16 @@ def posts(request):
                     post.video = request.FILES['video']
                 post.save()
                 return redirect('posts_page')
-            else:
-                post = create_post(request, Post.objects.get(id=int(request.POST.get('id'))))
-                if 'image' in request.FILES:
-                    post.type = 'image'
-                    post.image = request.FILES['image']
-                elif 'video' in request.FILES:
-                    post.type = 'video'
-                    post.video = request.FILES['video']
-                post.save()
-                return redirect('posts_page')
+        else:
+            post = create_post(request, Post.objects.get(id=int(request.POST.get('id'))))
+            if 'image' in request.FILES:
+                post.type = 'image'
+                post.image = request.FILES['image']
+            elif 'video' in request.FILES:
+                post.type = 'video'
+                post.video = request.FILES['video']
+            post.save()
+            return redirect('posts_page')
     context = {
         'token' : get_token(request),
         'posts' : Post.objects.all()
