@@ -76,8 +76,9 @@
         <small>{{program.start_date|date:'G:i'}} - {{program.end_date|date:'G:i'}}</small>
       </p>
       <button class="material-symbols-outlined play_btn" id="paused">play_arrow</button>
-      <audio muted id="radio_track"
-        src="https://res.cloudinary.com/dvnemzw0z/video/upload/v1692878259/kizz_daniel_empire_cough_official_video_aac_23177_butoqv.m4a"></audio>
+      <audio muted style="display: none;" id="radio_track">
+        <source src="https://dc4.serverse.com/proxy/vlauavyv/stream" type="audio/mpeg">
+      </audio>
     </div>
     <div class="right">
       <input type="text" placeholder="Search">
