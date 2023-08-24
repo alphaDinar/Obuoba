@@ -50,7 +50,8 @@
     </a>
     <p>
       <span>OBUOBA FM</span>
-      <a href="tel:+233531387554"><i class="material-symbols-outlined" style="font-size: 0.8rem;">phone</i> 053 138
+      <a href="tel:+233531387554" style="color: wheat;"><i class="material-symbols-outlined"
+          style="font-size: 0.8rem;">phone</i> 053 138
         7554</a>
     </p>
   </section>
@@ -73,7 +74,9 @@
         <span>{{program.name}}</span>
         <small>{{program.start_date|date:'G:i'}} - {{program.end_date|date:'G:i'}}</small>
       </p>
-      <button class="material-symbols-outlined">play_arrow</button>
+      <button class="material-symbols-outlined play_btn" id="paused">play_arrow</button>
+      <audio muted id="radio_track"
+        src="https://res.cloudinary.com/dvnemzw0z/video/upload/v1692878259/kizz_daniel_empire_cough_official_video_aac_23177_butoqv.m4a"></audio>
     </div>
     <div class="right">
       <input type="text" placeholder="Search">
@@ -161,6 +164,11 @@
       return countdown
     }
   </script>
+
+  {% block js %}
+
+  {% endblock js %}
+
   <script>
     var today = new Date()
     var program_start_date = new Date('{{program.start_date|date:"c"}}')
@@ -173,6 +181,22 @@
       cur_tags.forEach((el) => {
         el.children[0].innerHTML = 'On Air'
       })
+      setInterval(() => {
+        var today = new Date()
+
+        var totalTime = program_end_date - program_start_date
+        var timeLeft = program_end_date - today
+        var progress_val = 100 - ((timeLeft * 100) / totalTime)
+        progress_box_bars_smalls.forEach((set) => {
+          [...set.children].forEach((el, i) => {
+            var bars_count = set.children.length
+            var progress_count = (progress_val / 100) * bars_count
+            if (i <= progress_count) {
+              el.style.background = 'orange'
+            }
+          })
+        })
+      }, 100)
     } else if (program_start_date > today) {
       setInterval(() => {
         cur_tags.forEach((el) => {
@@ -181,9 +205,98 @@
       }, 500)
     }
   </script>
-  {% block js %}
 
-  {% endblock js %}
+  <script>
+    const progress_box_bars_set = document.querySelectorAll('.progress_box .graph')
+
+    progress_box_bars_set.forEach((progress_box_bars) => {
+      for (var i = 0; i < 20; i++) {
+        var small_bar = document.createElement('small')
+        if (i % 4 === 0) {
+          small_bar.classList.add('s1')
+          small_bar.style.height = '15px'
+        } else if (i % 4 === 1) {
+          small_bar.classList.add('s2')
+          small_bar.style.height = '10px'
+        } else if (i % 4 === 2) {
+          small_bar.classList.add('s3')
+          small_bar.style.height = '20px'
+        } else if (i % 4 === 3) {
+          small_bar.classList.add('s4')
+          small_bar.style.height = '5px'
+        }
+        progress_box_bars.appendChild(small_bar)
+      }
+    })
+
+    const progress_box_bars_smalls = document.querySelectorAll('.progress_box .graph')
+    progress_box_bars_smalls.forEach((set) => {
+      [...set.children].forEach((el, i) => {
+        var el_start = el.style.height
+        var el_end = '10px'
+        anime({
+          loop: true,
+          targets: el,
+          scale: [0.5, 1],
+          delay: i * 5,
+        })
+      })
+    })
+
+    document.querySelectorAll('.bars').forEach((bar, i) => {
+      [...bar.children].forEach((el, i) => {
+        anime({
+          loop: true,
+          targets: el,
+          scale: [0, 1],
+          opacity: [0.5, 1],
+          duration: 2000,
+          delay: 50 * i,
+          height: [15, 25, 15, 20, 25],
+        })
+      })
+    })
+  </script>
+
+  <script>
+    const play_btns = document.querySelectorAll('.play_btn')
+    const radio_track = document.getElementById('radio_track')
+    play_btns.forEach((el) => {
+      el.onclick = () => {
+        if (el.id === 'paused') {
+          play_btns.forEach((play) => {
+            play.id = 'playing'
+            play.innerHTML = 'stop'
+            radio_track.play()
+            radio_track.muted = false
+            document.querySelectorAll('.bars').forEach((bar, i) => {
+              [...bar.children].forEach((mini_bar, i) => {
+                mini_bar.style.background = 'orange'
+              })
+            })
+          })
+        } else {
+          play_btns.forEach((play) => {
+            play.id = 'paused'
+            play.innerHTML = 'play_arrow'
+            radio_track.pause()
+            radio_track.muted = true
+            document.querySelectorAll('.bars').forEach((bar, i) => {
+              console.log(bar,i);
+              [...bar.children].forEach((mini_bar, ii) => {
+                if(i === 2 || i === 0){
+                  mini_bar.style.background = 'white';
+                }else if (i === 3 || i === 1) {
+                  mini_bar.style.background = '#6C6CFE';
+                }
+              })
+            })
+          })
+        }
+      }
+    })
+  </script>
+
 </body>
 
 </html>

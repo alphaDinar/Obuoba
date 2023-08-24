@@ -125,7 +125,7 @@
   border-radius: 10px 10px 0 0;
 }
 
-.main_player .card p {
+.main_player .card .low {
   width: 90%;
   display: flex;
   flex-direction: column;
@@ -135,7 +135,7 @@
 
 }
 
-.main_player .card p span {
+.main_player .card .low span {
   display: flex;
   align-items: center;
   gap: 0 0.5rem;

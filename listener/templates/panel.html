@@ -13,18 +13,20 @@
       <img src="{{program.image.url}}" alt="">
 
       <nav>
-        <p><i class="material-symbols-outlined">radio</i> <span>{{program.name}}</span></p>
+        <p><i class="material-symbols-outlined">radio</i> <span>Program :</span> <span>{{program.name}}</span></p>
+        <p><i class="material-symbols-outlined">person</i> <span>{{program.host}}</span></p>
         <p><i class="material-symbols-outlined">timer</i> <span>{{program.start_date|date:'G:i'}} -
             {{program.end_date|date:'G:i'}}</span></p>
-        <button class="material-symbols-outlined">play_arrow</button>
-      </nav>
 
-      <style>
-         .main_player p span:nth-child(1) small,.player_box nav p:nth-child(1) span{
-          font-size: 1.4rem;
-          font-weight: 600;
-        }
-      </style>
+        <div class="progress_box_holder">
+          <button class="material-symbols-outlined play_btn" id="paused">play_arrow</button>
+          <div class="progress_box">
+            <div class="line"></div>
+            <div class="graph" style="position: revert;">
+            </div>
+          </div>
+        </div>
+      </nav>
 
       <div class="bars">
         <small></small>
@@ -103,15 +105,19 @@
     font-size: 2rem;
   }
 
-  .player_box .bars, .main_player .bars {
+  .player_box .bars,
+  .main_player .bars {
     position: absolute;
     display: flex;
     bottom: 10px;
     right: 10px;
     gap: 0 1px;
+    height: 25px;
+    align-items: center;
   }
 
-  .player_box .bars small, .main_player .bars small {
+  .player_box .bars small,
+  .main_player .bars small {
     display: block;
     height: 25px;
     width: 5px;
@@ -128,6 +134,54 @@
     padding: 3px 10px;
     border-radius: 5px 0;
     font-weight: 400;
+  }
+
+  .main_player .low span:nth-child(1) small,
+  .player_box nav p:nth-child(1) span {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .progress_box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .progress_box .graph {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    gap: 0 0.2rem;
+    height: 20px;
+  }
+
+  .progress_box .line {
+    position: absolute;
+    width: 80%;
+    border-radius: 20px;
+  }
+
+  .progress_box .graph small {
+    display: block;
+    width: 2px;
+    border-radius: 10px;
+    background: tomato;
+  }
+
+  .progress_box_holder {
+    display: flex;
+    align-items: center;
+    gap: 0 1rem;
+  }
+
+  .play_btn{
+    background: #ec8d48;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
   }
 
   @media all and (max-width:1700px) {

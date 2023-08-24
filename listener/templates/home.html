@@ -20,12 +20,21 @@
     </div>
 
     <img src="{{program.image.url}}" alt="">
-    <p>
-      <span><i class="material-symbols-outlined">radio</i> <small>{{program.name}}</small></span>
+    <section class="low">
+      <span><i class="material-symbols-outlined">radio</i> <small>Program :</small>
+        <small>{{program.name}}</small></span>
+      <span><i class="material-symbols-outlined">person</i> <small>{{program.host}}</small></span>
       <span><i class="material-symbols-outlined">schedule</i> <small>{{program.start_date|date:'G:i'}} -
           {{program.end_date|date:'G:i'}}</small></span>
-      <button class="material-symbols-outlined">play_arrow</button>
-    </p>
+      <div class="progress_box_holder">
+        <button class="material-symbols-outlined play_btn" id="paused">play_arrow</button>
+        <div class="progress_box">
+          <div class="line"></div>
+          <div class="graph" style="position: revert;">
+          </div>
+        </div>
+      </div>
+    </section>
 
     <div class="bars">
       <small></small>
@@ -78,11 +87,11 @@
       <small style="color: rgb(107, 107, 107);">Source : {{post.source}}</small>
       <p style="color: black;">{{post.content}}</p>
       <nav>
-        <a href="view_news.html" class="fa-brands fa-facebook-f"></a>
-        <a class="fa-brands fa-twitter"></a>
-        <a class="fa-brands fa-whatsapp"></a>
-        <a class="fa-brands fa-linkedin"></a>
-        <a class="fa-brands fa-google"></a>
+        <a href="view_news.html" style="color: #4867aa;" class="fa-brands fa-facebook-f"></a>
+        <a class="fa-brands fa-whatsapp" style="color: #39d855;"></a>
+        <a class="fa-brands fa-twitter" style="color: #1da1f2;"></a>
+        <a class="fa-brands fa-google" style="color: #e94235;"></a>
+        <a class="fa-brands fa-linkedin" style="color: #0077b5;"></a>
       </nav>
     </div>
   </section>
@@ -251,11 +260,11 @@
               <small style="color: rgb(107, 107, 107);">Source : ${post.source}</small>
               <p style="color: black;">${post.content}</p>
               <nav>
-                <a href="view_news.html" class="fa-brands fa-facebook-f"></a>
-                <a class="fa-brands fa-twitter"></a>
-                <a class="fa-brands fa-whatsapp"></a>
-                <a class="fa-brands fa-linkedin"></a>
-                <a class="fa-brands fa-google"></a>
+                <a href="view_news.html" style="color: #4867aa;" class="fa-brands fa-facebook-f"></a>
+                <a class="fa-brands fa-whatsapp" style="color: #39d855;"></a>
+                <a class="fa-brands fa-twitter" style="color: #1da1f2;"></a>
+                <a class="fa-brands fa-google" style="color: #e94235;"></a>
+                <a class="fa-brands fa-linkedin" style="color: #0077b5;"></a>
               </nav>
             </div>
           </section>
