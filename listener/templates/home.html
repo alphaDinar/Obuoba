@@ -18,12 +18,13 @@
         <small></small>
       </div>
     </div>
-
-    <img src="{{program.image.url}}" alt="">
+    <section class="player_image">
+      <img src="{{program.image.url}}" alt="">
+      <p><i class="material-symbols-outlined">person</i> <span>{{program.host}}</span></p>
+    </section>
     <section class="low">
       <span><i class="material-symbols-outlined">radio</i> <small>Program :</small>
         <small>{{program.name}}</small></span>
-      <span><i class="material-symbols-outlined">person</i> <small>{{program.host}}</small></span>
       <span><i class="material-symbols-outlined">schedule</i> <small>{{program.start_date|date:'G:i'}} -
           {{program.end_date|date:'G:i'}}</small></span>
       <div class="progress_box_holder">
@@ -142,7 +143,7 @@
     var top_swiper = new Swiper('.top_swiper', {
       loop: false,
       slidesPerView: 2,
-      spaceBetween: 10,
+      spaceBetween: 30,
       navigation: {
         nextEl: top_swiper_next,
         prevEl: top_swiper_prev
