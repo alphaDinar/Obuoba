@@ -284,7 +284,6 @@
             radio_track.pause()
             radio_track.muted = true
             document.querySelectorAll('.bars').forEach((bar, i) => {
-              console.log(bar,i);
               [...bar.children].forEach((mini_bar, ii) => {
                 if(i === 2 || i === 0){
                   mini_bar.style.background = 'white';
