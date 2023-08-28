@@ -16,12 +16,54 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
     integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link class="aosLink" rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  <script>
+    const aosLink = document.querySelector('.aosLink')
+    const toggleAosLink = () => {
+      if (window.innerWidth > 800) {
+        aosLink.href = 'https://unpkg.com/aos@next/dist/aos.css'
+      } else {
+        aosLink.href = ''
+      }
+    }
+    toggleAosLink()
+  </script>
+
   <title>OBUOBA RADIO</title>
   <link rel="stylesheet" href="{% static 'base.css' %}">
   {% block css %}
 
   {% endblock css %}
   <style>
+    .pageCover{
+      position: fixed;
+      z-index: 10000;
+      background: rgba(0, 0, 0, 0.345);
+      width: 100%;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      display: flex;
+      gap: 0 1rem;
+      justify-content: center;
+      align-items: center;
+    }
+    .pageCover div{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: white;
+    }
+    @media all and (max-width:800px){
+      .pageCover div{
+        width: 30px;
+        height: 30px;
+      }
+    }
+    .pageCover.change{
+      display: none;
+    }
     #tag {
       display: flex;
       gap: 0 1rem;
@@ -281,13 +323,12 @@
           play_btns.forEach((play) => {
             play.id = 'paused'
             play.innerHTML = 'play_arrow'
-            radio_track.pause()
             radio_track.muted = true
             document.querySelectorAll('.bars').forEach((bar, i) => {
               [...bar.children].forEach((mini_bar, ii) => {
-                if(i === 2 || i === 0){
+                if (i === 2 || i === 0) {
                   mini_bar.style.background = 'white';
-                }else if (i === 3 || i === 1) {
+                } else if (i === 3 || i === 1) {
                   mini_bar.style.background = '#6C6CFE';
                 }
               })
@@ -297,7 +338,36 @@
       }
     })
   </script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 
+  <section class="pageCover">
+    <div></div>
+    <div></div>
+    <div></div>
+  </section>
+
+  <script>
+    const pageCover = document.querySelector('.pageCover');
+
+    [...pageCover.children].forEach((el,i)=>{
+      anime({
+        loop : true,
+        targets : el,
+        scale : [0.5,1],
+        opacity : [0,1]
+      })
+    })
+
+    window.onload =()=>{
+      pageCover.classList.add('change')
+      anime.remove([...pageCover.children]);
+    }
+  </script>
+
+  
 </body>
 
 </html>

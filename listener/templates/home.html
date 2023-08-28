@@ -3,6 +3,28 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'listener/home.css' %}">
+<style>
+  .news .img_box p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    max-height: 80px;
+  }
+
+  @media all and (max-width:550px) {
+    .news .img_box p {
+      max-height: 60px;
+      -webkit-line-clamp: 2;
+      font-size: 0.8rem;
+      color: rgb(99, 99, 99) !important;
+    }
+  }
+
+  @media all and (max-width:450px) {
+    .news .img_box p {
+      display: none;
+    }
+  }
+</style>
 {% endblock css %}
 
 
@@ -66,7 +88,7 @@
 
 <section class="news_box">
   {% for post in posts %}
-  <section class="news" data-link="{{post.slug}}">
+  <section class="news" data-link="{{post.slug}}" data-aos="fade-up">
     <p>
       <span style="font-size: 0.9rem;">{{post.date_added|timesince}} ago</span>
       <span>
@@ -189,47 +211,52 @@
 
 <script>
   const page = document.querySelector('.page')
+  const post_count = parseInt('{{post_count}}')
+  const news_count = document.querySelectorAll('.news').length
+
+  // console.log(post_count)
+  // console.log(post_count > news_count)
+
+  // if (post_count > news_count) {
+  //   const handleScrolls = () => {
+  //     if (window.innerWidth > 650) {
+  //       window.onscroll = () => {
+  //         checkWindowEnd()
+  //       }
+  //     } else {
+  //       page.onscroll = () => {
+  //         checkPageEnd()
+  //       };
+  //     }
+  //   }
+  //   handleScrolls()
+  // }
+
+  // const checkWindowEnd = () => {
+  //   const documentHeight = document.documentElement.scrollHeight;
+  //   const viewportHeight = window.innerHeight;
+  //   const scrollPosition = window.scrollY || window.pageYOffset;
 
 
-  const handleScrolls = () => {
-    if (window.innerWidth > 650) {
-      window.onscroll = () => {
-        checkWindowEnd()
-      }
-    } else {
-      page.onscroll = () => {
-        checkPageEnd()
-      };
-    }
-  }
-  handleScrolls()
+  //   if (scrollPosition + viewportHeight >= documentHeight) {
+  //     console.log("Window end reached!");
+  //     loaderAnime.play()
 
+  //     runAxios('more_posts', news_count)
+  //     console.log(news_box)
+  //   }
+  // }
 
-  const checkWindowEnd = () => {
-    const documentHeight = document.documentElement.scrollHeight;
-    const viewportHeight = window.innerHeight;
-    const scrollPosition = window.scrollY || window.pageYOffset;
+  // const checkPageEnd = () => {
+  //   const divHeight = page.scrollHeight;
+  //   const divScrollPosition = page.scrollTop;
 
-    if (scrollPosition + viewportHeight >= documentHeight) {
-      console.log("Window end reached!");
-      loaderAnime.play()
-      var news_count = document.querySelectorAll('.news').length
-      runAxios('more_posts', news_count)
-      console.log(news_box)
-    }
-  }
-
-  const checkPageEnd = () => {
-    const divHeight = page.scrollHeight;
-    const divScrollPosition = page.scrollTop;
-
-    if (divScrollPosition + page.clientHeight >= divHeight) {
-      console.log("Div end reached!");
-      loaderAnime.play()
-      var news_count = document.querySelectorAll('.news').length
-      runAxios('more_posts', news_count)
-    }
-  }
+  //   if (divScrollPosition + page.clientHeight >= divHeight) {
+  //     console.log("Div end reached!");
+  //     loaderAnime.play()
+  //     runAxios('more_posts', news_count)
+  //   }
+  // }
 </script>
 <script>
   const handleData = (data) => {
@@ -276,5 +303,43 @@
   }
 </script>
 
+
+<script>
+  const createResponsiveAds = () => {
+    const mainAds = document.querySelectorAll('.ad')
+    const sideAds = document.querySelectorAll('.sideAd')
+    const panelAds = document.querySelectorAll('.panelAd')
+
+    let box = []
+    for (var i = 0; i < sideAds.length; i++) {
+      if (mainAds[i]) {
+        box.push(mainAds[i])
+      }
+      box.push(sideAds[i])
+      box.push(panelAds[i])
+    }
+
+    const newsList = document.querySelectorAll('.news')
+    newsList.forEach((news, i) => {
+      var obj = box[i]
+      if (obj) {
+        if ((i + 1) % 2 === 0) {
+          news_box.insertBefore(obj, news)
+        }
+      }
+    })
+  }
+
+  if(window.innerWidth < 451){
+    createResponsiveAds()
+  }
+
+  window.onresize = () => { 
+    if(window.innerWidth < 451){
+      createResponsiveAds()
+    }
+    toggleAosLink() 
+    }
+</script>
 
 {% endblock js %}

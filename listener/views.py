@@ -23,17 +23,17 @@ def home(request):
       'posts_rev' : Post.objects.filter(type='image').order_by('-id')[:9],
       'program' : Program.objects.order_by('start_date').first(),
       'next_program' : next_program,
+      'post_count' : Post.objects.all().count()
    }
    return render(request, 'home.html', context)
 
 def more_posts(request):
    json_data = json.loads(request.body)['data']
-   x = int(json_data) + 10
+   x = int(json_data) 
    post_box = []
-   posts = Post.objects.all().order_by('-date_added')[:x]
-   print(posts)
+   posts = Post.objects.all().order_by('-date_added')[:x + 10]
 
-   # print(timesince(Post.objects.first().date_added))
+   # if posts.count() > x:
    for post in posts:
       post_el = {}
       post_el['slug'] = post.slug

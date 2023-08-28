@@ -20,10 +20,36 @@
     <a data-cat="obituary"> <i class="material-symbols-outlined">deceased</i> <span>Obituary</span> </a>
   </form>
   <footer>
-    <a href=""><i class="fa-brands fa-google"></i> <span>Google Podcast</span> </a>
-    <a href=""><i class="fa-brands fa-itunes"></i> <span>iTunes</span> </a>
-    <a href=""><i class="fa-brands fa-spotify"></i> <span>Spotify</span> </a>
+    <a href=""><i style="color: #e94235;" class="fa-brands fa-google"></i> <span>Google Podcast</span> </a>
+    <a href=""><i style="color: #924fea;" class="fa-brands fa-itunes"></i> <span>iTunes</span> </a>
+    <a href=""><i style="color: #2dd96b;" class="fa-brands fa-spotify"></i> <span>Spotify</span> </a>
   </footer>
+
+  <section class="presenterBox">
+    <div class="imgBox" style="background-image: url({{program.image.url}});">
+      <p><span>Presenter Profile</span></p>
+      <p><i class="material-symbols-outlined">person</i> <span>Frank Osei</span></p>
+    </div>
+    <article>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit autem fugit, veniam placeat ab asperiores saepe
+      laborum quo error culpa consequuntur accusamus dicta quis! Quasi sapiente quod repellat voluptate corporis?
+    </article>
+    <div class="aBox">
+      <a href="">Read More</a>
+    </div>
+  </section>
+
+  <section class="sideAdBox">
+    <section class="sideAd" data-aos="fade-up">
+
+    </section>
+  </section>
+  <script>
+    for (var i = 0; i < 6; i++) {
+      document.querySelector('.sideAdBox').appendChild(document.querySelector('.sideAd').cloneNode(true))
+    }
+  </script>
+
 </section>
 
 <style>
@@ -53,15 +79,113 @@
     cursor: pointer;
     display: flex;
     font-size: 1.1rem;
+    border-bottom: 2px solid transparent;
+    transition: 0.3s ease;
     align-items: center;
     color: black;
     gap: 0 0.5rem;
+  }
+
+  .sideBar form a:hover {
+    border-bottom: 2px solid var(--secondary);
+  }
+
+  .sideBar form a:hover i {
+    animation: pop 3s infinite;
+  }
+
+  @keyframes pop {
+    0% {
+      scale: 1;
+    }
+
+    50% {
+      scale: 1.2;
+    }
+
+    100% {
+      scale: 1;
+    }
   }
 
   .sideBar footer {
     display: flex;
     flex-direction: column;
     gap: 0.5rem 0;
+  }
+
+  .sideBar footer a {
+    color: rgb(69, 39, 39);
+  }
+
+  .presenterBox {
+    width: 100%;
+    border: 1px solid darkgray;
+    padding: 0 0 5px 0;
+    border-radius: 5px;
+  }
+
+  .presenterBox .imgBox {
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    height: 250px;
+    display: flex;
+    position: relative;
+    border-radius: 5px;
+    align-items: flex-end;
+  }
+
+  .presenterBox .imgBox p:nth-child(1) {
+    position: absolute;
+    top: 0;
+    background: black;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 0 0 10px 0;
+    left: 0;
+  }
+
+  .presenterBox .imgBox p:nth-child(2) {
+    width: 90%;
+    padding: 5px 5%;
+    background: var(--secondary);
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  .presenterBox article {
+    width: 90%;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 70px;
+    padding: 5px 5%;
+  }
+
+  .presenterBox .aBox {
+    width: 90%;
+    padding: 5px 5%;
+  }
+
+  .presenterBox a {
+    padding: 3px 5px;
+    border-radius: 3px;
+    color: white;
+    background: rgb(11, 71, 131);
+  }
+
+
+
+  @media all and (max-width:650px) {
+    .presenterBox {
+      background: black;
+    }
   }
 </style>
 
