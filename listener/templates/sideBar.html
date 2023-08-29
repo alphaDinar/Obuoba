@@ -28,11 +28,10 @@
   <section class="presenterBox">
     <div class="imgBox" style="background-image: url({{program.image.url}});">
       <p><span>Presenter Profile</span></p>
-      <p><i class="material-symbols-outlined">person</i> <span>Frank Osei</span></p>
+      <p><i class="material-symbols-outlined">person</i> <span>{{program.host}}</span></p>
     </div>
     <article>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit autem fugit, veniam placeat ab asperiores saepe
-      laborum quo error culpa consequuntur accusamus dicta quis! Quasi sapiente quod repellat voluptate corporis?
+      {{program.description}}
     </article>
     <div class="aBox">
       <a href="">Read More</a>
@@ -45,7 +44,7 @@
     </section>
   </section>
   <script>
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < 3; i++) {
       document.querySelector('.sideAdBox').appendChild(document.querySelector('.sideAd').cloneNode(true))
     }
   </script>
