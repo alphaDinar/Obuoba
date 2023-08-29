@@ -45,6 +45,7 @@ class Post(models.Model):
     type = models.CharField(max_length=50, choices=TYPE, default='image')
     tags = models.CharField(max_length=300)
     source = models.CharField(max_length=300)
+    impressions = models.IntegerField(default=0)
     date_added = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=300, blank=True)
     def save( self,*args, **kwargs):

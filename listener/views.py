@@ -21,6 +21,7 @@ def home(request):
       'token' : get_token(request),
       'posts' : posts,
       'posts_rev' : Post.objects.filter(type='image').order_by('-id')[:9],
+      'popular_posts' : Post.objects.order_by('-impressions')[:5],
       'program' : Program.objects.order_by('start_date').first(),
       'next_program' : next_program,
       'post_count' : Post.objects.all().count()
@@ -31,9 +32,8 @@ def more_posts(request):
    json_data = json.loads(request.body)['data']
    x = int(json_data) 
    post_box = []
-   posts = Post.objects.all().order_by('-date_added')[:x + 10]
+   posts = Post.objects.all().order_by('-date_added')[:x+20]
 
-   # if posts.count() > x:
    for post in posts:
       post_el = {}
       post_el['slug'] = post.slug
@@ -53,16 +53,45 @@ def more_posts(request):
    return JsonResponse({'test':json.dumps(post_box)})
 
 def view_post(request, slug):
+   post = Post.objects.get(slug=slug)
+   union_posts = Post.objects.filter(category=post.category).exclude(id=post.id)
+   if union_posts.count() < 4:
+      union_posts = Post.objects.exclude(category=post.category) | Post.objects.filter(category=post.category).exclude(id=post.id)
+
    if Program.objects.count() > 1:
       next_program = Program.objects.filter().order_by('start_date')[1]
    else:
       next_program = '' 
    context = {
-      'post' : Post.objects.get(slug=slug),
+      'post' : post,
       'program' : Program.objects.order_by('start_date').first(),
+      'popular_posts' : Post.objects.order_by('-impressions')[:5],
+      'relateds' : union_posts[:4],
       'next_program' : next_program
    }
    return render(request, 'view_post.html', context)
+
+def add_post_impression(request):
+   json_data = json.loads(request.body)['data']
+   post = Post.objects.get(id=int(json_data))
+   post.impressions += 1
+   post.save()
+   return JsonResponse({'test':'impressed'})
+
+
+def view_program(request, id):
+   program = Program.objects.get(id=id)
+   if Program.objects.count() > 1:
+      next_program = Program.objects.filter().order_by('start_date')[1]
+   else:
+      next_program = '' 
+   context = {
+      'program' : program,
+      'relateds' : Program.objects.order_by('-start_date').exclude(name=program.name)[:4],
+      'next_program' : next_program,
+      'popular_posts' : Post.objects.order_by('-impressions')[:5],
+   }
+   return render(request, 'view_program.html', context)
 
 def schedule_program(request):
    json_data = json.loads(request.body)['data']

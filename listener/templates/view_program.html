@@ -9,49 +9,42 @@
 <section class="news_box">
   <section class="news" data-link="{{post.slug}}">
     <p>
-      <span>{{post.date_added|timesince}}</span>
+      <span> <i class="material-symbols-outlined">schedule</i> {{program.start_date|date:'G:i'}} -
+        {{program.end_date|date:'G:i'}}</span>
       <span>
-        <i class="material-symbols-outlined">steppers</i>
-        {{post.category}}
+        <i class="material-symbols-outlined">radio</i>
       </span>
     </p>
     <h3>
-      {{post.title}}
+      {{program.name}}
     </h3>
+    <p>
+      <span> <i class="material-symbols-outlined">person</i> {{program.host}}</span>
+    </p>
     <div class="tag_box" data-tags="{{post.tags}}">
     </div>
     <div class="img_box">
-      {% if post.type == 'image' %}
-      <img src="{{post.image.url}}">
-      {% else %}
-      <video src="{{post.video.url}}" muted controls></video>
-      {% endif %}
-      <small style="color: rgb(107, 107, 107);">Source : {{post.source}}</small>
-      <p style="color: black;">{{post.content}}</p>
-      <nav>
-        <a href="view_news.html" class="fa-brands fa-facebook-f"></a>
-        <a class="fa-brands fa-twitter"></a>
-        <a class="fa-brands fa-whatsapp"></a>
-        <a class="fa-brands fa-linkedin"></a>
-        <a class="fa-brands fa-google"></a>
-      </nav>
+      <img src="{{program.image.url}}" alt="">
+      <small
+        style="padding: 0;font-size: 1.3rem; width: max-content;">Description :</small>
+      <p style="color: black; padding: 0;">{{program.description}}</p>
     </div>
   </section>
 </section>
 
 <section class="related_box">
-  <h3>Related Topics</h3>
+  <h3>Other Programs</h3>
   <section class="relateds">
     {% for related in relateds %}
-    <a href="{% url 'view_post_page' related.slug %}" class="mini_news">
-      {% if related.type == 'image' %}
+    <a href="{% url 'view_program_page' related.id %}" class="mini_news">
       <img src="{{related.image.url}}" alt="">
-      {% else %}
-      <video src="{{related.video.url}}" controls></video>
-      {% endif %}
-      <small>
-        {{related.title}}
-      </small>
+      <span>
+        <i class="material-symbols-outlined">radio</i> {{related.name}}
+      </span>
+      <hr style="width: 100px; border-top: 1px solid rgb(76, 76, 76);">
+      <span>
+        <i class="material-symbols-outlined">person</i> {{related.host}}
+      </span>
     </a>
     {% endfor %}
   </section>
@@ -83,17 +76,27 @@
     gap: 2rem;
   }
 
+  .mini_news{
+    gap: 0.2rem 0;
+  }
+  .mini_news span{
+    display: flex;
+    gap: 0 0.5rem;
+    align-items: center;
+  }
+
   .mini_news {
     display: flex;
     flex-direction: column;
-    gap: 1rem 0;
+
     border: 1px solid darkgray;
     padding: 10px;
     border-radius: 10px;
     color: black;
   }
 
-  .mini_news img, video {
+  .mini_news img,
+  video {
     width: 100%;
     border-radius: 10px 10px 0 0;
     border-radius: 10px;

@@ -88,7 +88,7 @@
 
 <section class="news_box">
   {% for post in posts %}
-  <section class="news" data-link="{{post.slug}}" data-aos="fade-up">
+  <section class="news" data-link="{{post.slug}}" data-id="{{post.id}}" data-aos="fade-up">
     <p>
       <span style="font-size: 0.9rem;">{{post.date_added|timesince}} ago</span>
       <span>
@@ -138,9 +138,12 @@
   </script>
 
   <script>
-    const fixAdBox = (news_box) => {
-      [...news_box.children].forEach((el, i) => {
-        if ((i + 1) % 3 === 0) {
+    const fixAdBox = (newsList) => {
+      document.querySelectorAll('.ad').forEach(ad_=>{
+        ad_.remove()
+      })
+      newsList.forEach((el, i) => {
+        if ((i + 1) % 2 === 0) {
           var test_ad = document.createElement('section')
           test_ad.classList.add('ad')
           var parentBox = el.parentNode
@@ -149,7 +152,7 @@
       })
     }
 
-    fixAdBox(document.querySelector('.news_box'))
+    fixAdBox(document.querySelectorAll('.news'))
   </script>
 </section>
 {% endblock main %}
@@ -187,6 +190,7 @@
   const setNewsLink = (news) => {
     news.forEach((el) => {
       el.onclick = () => {
+        runAxios('add_post_impression', el.dataset.id)
         window.location.href = `view_post/${el.dataset.link}`
       }
     })
@@ -212,51 +216,53 @@
 <script>
   const page = document.querySelector('.page')
   const post_count = parseInt('{{post_count}}')
-  const news_count = document.querySelectorAll('.news').length
 
-  // console.log(post_count)
-  // console.log(post_count > news_count)
+  const handleScrolls = (post_count) => {
+    if (window.innerWidth > 650) {
+      window.onscroll = () => {
+        if (post_count > document.querySelectorAll('.news').length) {
+          checkWindowEnd()
+        } else {
+          loaderAnime.pause()
+          loaderAnime.reset()
+          loader.style.display = 'none'
+        }
+      }
+    } else {
+      page.onscroll = () => {
+        if (post_count > document.querySelectorAll('.news').length) {
+          checkPageEnd()
+        } else {
+          loaderAnime.pause()
+          loaderAnime.reset()
+          loader.style.display = 'none'
+        }
+      };
+    }
+  }
+  handleScrolls(post_count)
 
-  // if (post_count > news_count) {
-  //   const handleScrolls = () => {
-  //     if (window.innerWidth > 650) {
-  //       window.onscroll = () => {
-  //         checkWindowEnd()
-  //       }
-  //     } else {
-  //       page.onscroll = () => {
-  //         checkPageEnd()
-  //       };
-  //     }
-  //   }
-  //   handleScrolls()
-  // }
 
-  // const checkWindowEnd = () => {
-  //   const documentHeight = document.documentElement.scrollHeight;
-  //   const viewportHeight = window.innerHeight;
-  //   const scrollPosition = window.scrollY || window.pageYOffset;
+  const checkWindowEnd = () => {
+    const documentHeight = document.documentElement.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const scrollPosition = window.scrollY || window.pageYOffset;
 
+    if (scrollPosition + viewportHeight >= documentHeight) {
+      loaderAnime.play()
+      runAxios('more_posts', document.querySelectorAll('.news').length)
+    }
+  }
 
-  //   if (scrollPosition + viewportHeight >= documentHeight) {
-  //     console.log("Window end reached!");
-  //     loaderAnime.play()
+  const checkPageEnd = () => {
+    const divHeight = page.scrollHeight;
+    const divScrollPosition = page.scrollTop;
 
-  //     runAxios('more_posts', news_count)
-  //     console.log(news_box)
-  //   }
-  // }
-
-  // const checkPageEnd = () => {
-  //   const divHeight = page.scrollHeight;
-  //   const divScrollPosition = page.scrollTop;
-
-  //   if (divScrollPosition + page.clientHeight >= divHeight) {
-  //     console.log("Div end reached!");
-  //     loaderAnime.play()
-  //     runAxios('more_posts', news_count)
-  //   }
-  // }
+    if (divScrollPosition + page.clientHeight >= divHeight) {
+      loaderAnime.play()
+      runAxios('more_posts', document.querySelectorAll('.news').length)
+    }
+  }
 </script>
 <script>
   const handleData = (data) => {
@@ -270,7 +276,7 @@
       }
 
       news_box.innerHTML += `
-          <section class="news" data-link="${post.slug}">
+          <section class="news" data-link="${post.slug}" data-aos="fade-up">
             <p>
               <span style="font-size: 0.9rem;">${post.time_since} ago</span>
               <span>
@@ -299,7 +305,8 @@
     })
     setNewsLink(document.querySelectorAll('.news'))
     oneVideo(document.querySelectorAll('.news video'))
-    fixAdBox(document.querySelector('.news_box'))
+    fixAdBox(document.querySelectorAll('.news'))
+    // handleScrolls(post_count, document.querySelectorAll('.news').length)
   }
 </script>
 
@@ -330,16 +337,16 @@
     })
   }
 
-  if(window.innerWidth < 451){
+  if (window.innerWidth < 451) {
     createResponsiveAds()
   }
 
-  window.onresize = () => { 
-    if(window.innerWidth < 451){
+  window.onresize = () => {
+    if (window.innerWidth < 451) {
       createResponsiveAds()
     }
-    toggleAosLink() 
-    }
+    toggleAosLink()
+  }
 </script>
 
 {% endblock js %}

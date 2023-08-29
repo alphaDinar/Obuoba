@@ -55,30 +55,95 @@
   </section>
 
   <section class="panelAdBox">
-    <img class="panelAd" data-aos="fade-up" src="https://res.cloudinary.com/dvnemzw0z/image/upload/v1693298884/WhatsApp_Image_2023-08-28_at_16.29.48_cmmbpk.jpg" alt="">
+    <img class="panelAd" data-aos="fade-up" 
+      src="https://res.cloudinary.com/dvnemzw0z/image/upload/v1693298884/WhatsApp_Image_2023-08-28_at_16.29.48_cmmbpk.jpg"
+      alt="">
   </section>
 
   <script>
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 1; i++) {
       document.querySelector('.panelAdBox').appendChild(document.querySelector('.panelAd').cloneNode(true))
     }
   </script>
 
+
+  <section class="topStoryBox">
+    <h3>Top Stories</h3>
+    <section class="topStories">
+      {% for post in popular_posts %}
+      <a href="{% url 'view_post_page' post.slug %}" data-tags="{{post.tags}}" class="topStory">
+        <span>NPP</span>
+        <p>
+          {{post.title}}
+        </p>
+      </a>
+      {% endfor %}
+    </section>
+  </section>
+
   <style>
-    .sideAdBox, .panelAdBox {
+    .topStoryBox {
+      width: calc(100% - 20px);
+      padding: 10px 10px;
+      display: flex;
+      background: whitesmoke;
+      flex-direction: column;
+      align-items: flex-start;
+      border-radius: 10px;
+    }
+
+    .topStoryBox h3 {
+      padding: 5px 0;
+      border-bottom: 2px solid darkgray;
+    }
+    .topStories{
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem 0;
+    }
+    .topStory{
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid darkgray;
+    }
+    .topStory span{
+      font-size: 1.1rem;
+      color: darkgray;
+    }
+    .topStory p{
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      color: rgb(48, 48, 48);
+      overflow: hidden;
+      max-height: 50px;
+      font-size: 0.95rem;
+    }
+  </style>
+
+  <section class="panelAdBox">
+    <img class="panelAd" data-aos="fade-up"
+      src="https://res.cloudinary.com/dvnemzw0z/image/upload/v1693298884/WhatsApp_Image_2023-08-28_at_16.29.48_cmmbpk.jpg"
+      alt="">
+  </section>
+
+  <style>
+    .sideAdBox,
+    .panelAdBox {
       width: 100%;
       display: flex;
       flex-direction: column;
       gap: 1.5rem 0;
     }
 
-    .sideAd, .panelAd {
+    .sideAd,
+    .panelAd {
       width: 100%;
       border-radius: 10px;
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       object-fit: contain;
     }
-
   </style>
 </section>
 <button id="playlist" class="material-symbols-outlined" style="cursor: pointer;"
