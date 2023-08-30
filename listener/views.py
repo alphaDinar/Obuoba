@@ -100,3 +100,24 @@ def schedule_program(request):
    program.end_date = program.end_date + timedelta(days=7)
    program.save()
    return JsonResponse({'test':'schedule'})
+
+def contact(request):
+   context = {
+      'token' : get_token(request),
+      'program' : Program.objects.order_by('start_date').first(),
+   }
+   return render(request, 'contact.html', context)
+
+def about(request):
+   context = {
+      'token' : get_token(request),
+      'program' : Program.objects.order_by('start_date').first(),
+   }
+   return render(request, 'about.html', context)
+
+def terms(request):
+   context = {
+      'token' : get_token(request),
+      'program' : Program.objects.order_by('start_date').first(),
+   }
+   return render(request, 'terms.html', context)

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'listener/home.css' %}">
+<style>
+  .about_box {
+    width: 100%;
+    border: 1px solid darkgray;
+    border-radius: 15px;
+    width: 90%;
+    display: flex;
+    gap: 2rem 0;
+    flex-direction: column;
+    align-items: center;
+    padding: 3vh 5%;
+  }
+
+  .about_box img {
+    width: 200px;
+  }
+
+  .about_box p {
+    font-size: 1rem;
+  }
+</style>
+{% endblock css %}
+
+
+{% block page %}
+<section class="about_box">
+  <h3>Terms And Policies</h3>
+  <a href="{% url 'homepage' %}">
+    <img src="https://res.cloudinary.com/dvnemzw0z/image/upload/v1692289104/logo_2_nxwecd.png">
+  </a>
+  <section>
+    <p>
+      Welcome to Obuaba FM's website. By accessing and using this website, you agree to comply with these Terms &
+      Conditions. If you disagree with any part of these terms, please do not use our website.
+    </p>
+    <p>
+      1. Intellectual Property Rights: a. All content on this website, including but not limited to text, graphics, logos, images, audio clips, and software, is the property of Obuaba FM and is protected by copyright laws. b. You may not reproduce, distribute, modify, or use any of the content without obtaining prior written permission from Obuaba FM.
+    </p>
+    <p>
+      2. Use of Website: a. This website is for personal and non-commercial use only. You may not use it for any unlawful purpose or in a way that could harm or disrupt the website or its users. b. You agree to provide accurate and up-to-date information when using our website and to not impersonate any other person or entity.
+    </p>
+    <p>
+      3. Third-Party Links: a. Our website may contain links to third-party websites for your convenience. However, we do not endorse, control, or guarantee the accuracy or quality of the content on these websites. b. Obuaba FM is not responsible for any loss or damage that may arise from your use of these third-party websites.
+    </p>
+    <p>
+      4. Limitation of Liability: a. Obuaba FM shall not be liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use or inability to use our website. b. We make no warranties or representations about the accuracy or completeness of the content on our website.
+    </p>
+    <p>
+      5. Modifications: a. Obuaba FM reserves the right to modify or discontinue any aspect of this website without prior notice. b. We may also revise these Terms & Conditions at any time. By continuing to use the website, you agree to be bound by the updated Terms & Conditions.
+    </p>
+  </section>
+</section>
+
+<section class="about_box">
+  <h3>Privacy Policy</h3>
+  <section>
+    <p>
+      Your privacy is important to us. This Privacy Policy outlines how Obuaba FM collects, uses, and protects your personal information when you use our website.
+    </p>
+    <p>
+      1. Information We Collect: a. We may collect personal information, such as your name and email address, when you voluntarily provide it to us through forms or when subscribing to our newsletter. b. We may also collect non-personal information, such as your IP address and browser type, to analyze trends and improve our website's performance.
+    </p>
+    <p>
+      2. Use of Information: a. We may use your personal information to respond to your inquiries, send you newsletters, and provide you with information about our services. b. We do not sell, rent, or share your personal information with third parties, unless required by law.
+    </p>
+    <p>
+      3. Security: a. We take reasonable precautions to protect your personal information from unauthorized access, disclosure, or alteration. b. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+    </p>
+    <p>
+      4. Security: a. We take reasonable precautions to protect your personal information from unauthorized access, disclosure, or alteration. b. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+    </p>
+    <p>
+      5. Changes to Privacy Policy: a. We may update this Privacy Policy from time to time. It is your responsibility to review this page periodically for any changes. b. By using our website, you agree to be bound by the current version of the Privacy Policy.
+    </p>
+  </section>
+</section>
+
+
+<style>
+  .top_nav button:nth-child(1) {
+    display: none;
+  }
+
+  .top_nav .right {
+    display: none;
+  }
+
+  .about_box h3 {
+    font-size: 2rem;
+    font-weight: 400;
+    width: 90%;
+    text-align: center;
+    color: rgb(118, 118, 118);
+    border-bottom: 1px solid rgb(118, 118, 118);
+  }
+  .about_box section{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem 0;
+  }
+  .page{
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem 0;
+  }
+
+  @media all and (max-width:450px) {
+    .about_box {
+      margin: 2vh 0;
+      width: 80%;
+      padding: 3vh 5%;
+    }
+
+    .about_box h3 {
+      border: none;
+    }
+  }
+</style>
+{% endblock page %}

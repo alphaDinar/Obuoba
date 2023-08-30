@@ -77,34 +77,27 @@
   .sideBar footer a {
     cursor: pointer;
     display: flex;
-    font-size: 1.1rem;
     border-bottom: 2px solid transparent;
     transition: 0.3s ease;
     align-items: center;
     color: black;
+    padding-bottom: .3em;
     gap: 0 0.5rem;
+    background-size: 10%;
+    background-position: bottom;
+    background-repeat: repeat-x;
+    border-bottom: 0;
+    text-decoration: none;
   }
-
   .sideBar form a:hover {
-    border-bottom: 2px solid var(--secondary);
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .3s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23453886' stroke-width='2' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");   
+}
+  .sideBar form a i{
+    transition: 0.4s ease;
   }
-
   .sideBar form a:hover i {
-    animation: pop 3s infinite;
-  }
-
-  @keyframes pop {
-    0% {
-      scale: 1;
-    }
-
-    50% {
-      scale: 1.2;
-    }
-
-    100% {
-      scale: 1;
-    }
+    transform: translateX(-5px);
+    color: var(--theme);
   }
 
   .sideBar footer {

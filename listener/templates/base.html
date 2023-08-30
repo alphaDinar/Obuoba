@@ -36,7 +36,7 @@
 
   {% endblock css %}
   <style>
-    .pageCover{
+    .pageCover {
       position: fixed;
       z-index: 10000;
       background: rgba(0, 0, 0, 0.345);
@@ -49,21 +49,25 @@
       justify-content: center;
       align-items: center;
     }
-    .pageCover div{
+
+    .pageCover div {
       width: 50px;
       height: 50px;
       border-radius: 50%;
       background: white;
     }
-    @media all and (max-width:800px){
-      .pageCover div{
+
+    @media all and (max-width:800px) {
+      .pageCover div {
         width: 30px;
         height: 30px;
       }
     }
-    .pageCover.change{
+
+    .pageCover.change {
       display: none;
     }
+
     #tag {
       display: flex;
       gap: 0 1rem;
@@ -101,16 +105,60 @@
 
   <section class="top_nav">
     <button class="material-symbols-outlined" style="cursor: pointer;" onclick="toggleSideBar()">menu</button>
-    <div class="left">
-      <small>Follow Us On</small>
-      <hr style="width: 80px; border-top: 2px solid darkgray;">
-      <div>
-        <a class="fa-brands fa-instagram"></a>
-        <a class="fa-brands fa-facebook"></a>
-        <a class="fa-brands fa-twitter"></a>
-        <a class="fa-brands fa-tiktok"></a>
+    <section class="left_box">
+      <div class="left">
+        <small>Follow Us On</small>
+        <hr style="width: 80px; border-top: 2px solid darkgray;">
+        <div>
+          <a class="fa-brands fa-instagram"></a>
+          <a class="fa-brands fa-facebook"></a>
+          <a class="fa-brands fa-twitter"></a>
+          <a class="fa-brands fa-tiktok"></a>
+        </div>
       </div>
-    </div>
+
+      <div>
+        <a href="{% url 'about_page' %}" style="color: white;"> <i
+            class="material-symbols-outlined">not_listed_location</i> <span>About
+            us</span></a>
+        <a href="{% url 'contact_page' %}" style="color: white;"> <i class="material-symbols-outlined">contacts</i>
+          <span>Contact us</span></a>
+        <a href="{% url 'terms_page' %}" style="color: white;"> <i class="material-symbols-outlined">policy</i>
+          <span>Terms and Policies</span></a>
+      </div>
+
+      <style>
+        .left_box {
+          display: flex;
+          gap: 0 2rem;
+          align-items: center;
+        }
+
+        .left_box div:nth-child(2) {
+          display: flex;
+          flex-direction: row;
+          gap: 0 2rem;
+        }
+
+        .left_box div a {
+          display: flex;
+          align-items: center;
+          gap: 0 0.3rem;
+        }
+
+        @media all and (max-width:1000px) {
+          .left_box div:nth-child(2) {
+            gap: 0 1vw;
+          }
+
+          .left_box div a span {
+            display: none;
+          }
+        }
+      </style>
+
+
+    </section>
 
     <div class="player">
       <p>
@@ -128,7 +176,9 @@
     </div>
   </section>
 
+
   <section class="page">
+    {% block page %}
     {% include "sideBar.html" %}
 
     <section class="main">
@@ -143,7 +193,10 @@
       </section>
     </section>
     {% include "panel.html" %}
+    {% endblock page %}
   </section>
+
+
 
   <script>
     if (window.history.replaceState) {
@@ -352,22 +405,20 @@
   <script>
     const pageCover = document.querySelector('.pageCover');
 
-    [...pageCover.children].forEach((el,i)=>{
+    [...pageCover.children].forEach((el, i) => {
       anime({
-        loop : true,
-        targets : el,
-        scale : [0.5,1],
-        opacity : [0,1]
+        loop: true,
+        targets: el,
+        scale: [0.5, 1],
+        opacity: [0, 1]
       })
     })
 
-    window.onload =()=>{
+    window.onload = () => {
       pageCover.classList.add('change')
       anime.remove([...pageCover.children]);
     }
   </script>
-
-  
 </body>
 
 </html>

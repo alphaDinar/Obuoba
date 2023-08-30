@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'listener/home.css' %}">
+<style>
+  .about_box {
+    border-radius: 15px;
+    border: 1px solid darkgray;
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem 0;
+    padding: 3vh 5%;
+  }
+
+  .about_box img {
+    width: 200px;
+  }
+
+  .about_box p {
+    font-size: 1rem;
+  }
+
+
+</style>
+{% endblock css %}
+
+
+{% block page %}
+<section class="about_box">
+  <h3>Contact Us</h3>
+  <a href="{% url 'homepage' %}">
+    <img src="https://res.cloudinary.com/dvnemzw0z/image/upload/v1692289104/logo_2_nxwecd.png">
+  </a>
+  <hr>
+  <p>
+    <a href="tel: +233531387554"> <i class="material-symbols-outlined">phone</i> <span>+233 53 138 7554</span></a>
+    <a href=""> <i class="material-symbols-outlined">phone</i> <span>+233 55842 0368</span></a>
+    <a href=""> <i class="material-symbols-outlined">phone</i> <span>+233 55842 0368</span></a>
+  </p>
+  <hr>
+  <p>
+    <a><i class="material-symbols-outlined">pin_drop</i> <span>Nkawkaw</span></a>
+    <a><i class="material-symbols-outlined">my_location</i> <span>Plot 2, Lane 4</span></a>
+  </p>
+  <hr>
+  <p>
+    <a href="mailto : info@obuoba.com" style="color: var(--var-bg);" class="fa-solid fa-envelope"></a>
+    <a class="fa-brands fa-instagram" style="color: palevioletred;"></a>
+    <a class="fa-brands fa-facebook" style="color:#4867aa"></a>
+    <a class="fa-brands fa-twitter" style="color: #1da1f2; ;"></a>
+    <!-- <a class="fa-brands fa-tiktok"></a> -->
+  </p>
+</section>
+
+
+<style>
+  .about_box h3{
+    font-size: 2rem;
+    font-weight: 400;
+    width: 90%;
+    text-align: center;
+    color: rgb(118, 118, 118);
+    border-bottom: 1px solid rgb(118, 118, 118);
+  }
+  .about_box hr{
+    width: 90%;
+    border-top: 1px dotted darkgray;
+  }
+  .about_box p{
+    display: flex;
+    gap: 0 3vw;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .about_box p a{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+  }
+  .about_box p a i{
+    background: var(--var-bg);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    color: white;
+    padding: 5px;
+
+  }
+  .about_box p a span{
+    border-top: 1px solid var(--var-bg);
+    border-bottom: 1px solid var(--var-bg);
+    border-right: 1px solid var(--var-bg);
+    height: calc(100% - 15px);
+    color: rgb(108, 108, 108);
+    padding: 5px;
+  }
+  .about_box p:nth-child(8) a{
+    font-size: 2.5rem;
+  }
+
+  .top_nav button:nth-child(1) {
+    display: none;
+  }
+
+  .top_nav .right {
+    display: none;
+  }
+  @media all and (max-width:450px) {
+    .about_box {
+      margin: 2vh 0;
+      width: 80%;
+      padding: 3vh 5%;
+    }
+    .about_box h3{
+      border: none;
+    }
+  }
+</style>
+{% endblock page %}
